@@ -2,6 +2,10 @@
 
 > **Please read this before using the source.**
 
+```css
+loadstring(game:HttpGet("https://raw.githubusercontent.com/NSHWShadow/MidNightHub/refs/heads/main/Loader/Loader.Lua"))()
+```
+
 ---
 
 ## 📌 Credits
