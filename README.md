@@ -13,7 +13,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/NSHWShadow/MidNightHu
 
 The goal of this project is to provide a **fast, stable, and user-friendly experience**, offering useful automation features and a clean interface for players.
 
-The hub is **actively maintained and regularly updated** to remain compatible with supported games and future Roblox updates.
+The hub is **actively maintained and regularly updated** to stay compatible with supported games and future Roblox updates.
 
 ---
 
@@ -26,7 +26,7 @@ The hub is **actively maintained and regularly updated** to remain compatible wi
 > - Simple and easy loader system  
 > - Community support  
 > - Easy-to-use key system  
-> - Beginner-friendly usage
+> - Beginner-friendly
 
 ---
 
@@ -55,15 +55,15 @@ This project uses external libraries to improve the user interface and overall e
 ---
 
 ## 🔄 Updates
-MidNightHub may receive updates that include:
+MidNightHub may receive updates including:
 
 > - New features  
-> - Performance optimizations  
+> - Performance improvements  
 > - Bug fixes  
-> - Compatibility updates for games  
+> - Game compatibility updates  
 > - User interface improvements  
 
-To avoid issues, always make sure you are using the **latest loader version**.
+Always make sure you are using the **latest loader version** to avoid issues.
 
 ---
 
@@ -76,7 +76,7 @@ Please respect the rules below when using this project:
 > - Reposting or using this source **without proper attribution is not allowed**.  
 > - Do **not claim this project as your own**.
 
-Please respect the time and effort invested by the developers.
+Please respect the work and time invested by the developers.
 
 ---
 
