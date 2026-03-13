@@ -9,28 +9,29 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/NSHWShadow/MidNightHu
 ---
 
 ## 📖 About
-**MidNightHub** is a Roblox script hub developed by the **NSHW Team**.  
-The goal of this project is to provide a fast, stable, and user-friendly experience with useful automation features and a clean interface.
+**MidNight Hub** is a Roblox script hub developed by the **NSHW Team**.
 
-The hub is actively maintained and updated to keep compatibility with supported games and new Roblox updates.
+The goal of this project is to provide a **fast, stable, and user-friendly experience**, offering useful automation features and a clean interface for players.
+
+The hub is **actively maintained and regularly updated** to remain compatible with supported games and future Roblox updates.
 
 ---
 
 ## ✨ Features
-- Clean and optimized UI
-- Fast script execution
-- Frequent updates
-- Optimized performance
-- Modular script system
-- Easy loader system
-- Community support
-- Easy Key System
-- Easy For Use
+- Clean and optimized user interface  
+- Fast and reliable script execution  
+- Frequent updates and improvements  
+- Optimized performance  
+- Modular script system  
+- Simple and easy loader system  
+- Community support  
+- Easy-to-use key system  
+- Beginner-friendly usage
 
 ---
 
 ## 📌 Credits
-This project was created and is maintained by the **MidNight Team**.
+This project was created and is maintained by the **NSHW Team**.
 
 ### 👑 Team Members
 
@@ -48,21 +49,21 @@ This project was created and is maintained by the **MidNight Team**.
 ## 📚 Libraries
 This project uses external libraries to improve the user interface and overall experience.
 
-- **RedzLib** — UI library used inside the project  
+- **RedzLib** — UI library used in this project  
 - Original library creator: **@tlredz**
 
 ---
 
 ## 🔄 Updates
-The hub may receive updates including:
+MidNightHub may receive updates that include:
 
-- New features
-- Performance improvements
-- Bug fixes
-- Game compatibility updates
-- UI improvements
+- New features  
+- Performance optimizations  
+- Bug fixes  
+- Compatibility updates for games  
+- User interface improvements  
 
-Make sure you always use the **latest loader version** to avoid issues.
+To avoid issues, always make sure you are using the **latest loader version**.
 
 ---
 
@@ -70,17 +71,17 @@ Make sure you always use the **latest loader version** to avoid issues.
 
 Please respect the rules below when using this project:
 
-- Removing, editing, or hiding the original credits is **strictly prohibited**.
-- Any modification or redistribution **must keep the original credits**.
-- Unauthorized reposting or usage **without proper attribution is not allowed**.
-- Do not claim this project as your own.
+- Removing, editing, or hiding the original credits is **strictly prohibited**.  
+- Any modification or redistribution **must keep the original credits**.  
+- Reposting or using this source **without proper attribution is not allowed**.  
+- Do **not claim this project as your own**.
 
-Respect the work and time invested by the developers.
+Please respect the time and effort invested by the developers.
 
 ---
 
 ## 💬 Official Server
-Join the official MidNight community to receive updates, support, and announcements:
+Join the official **MidNight community** to receive updates, support, and announcements:
 
 https://discord.gg/grhsdKj5Nx
 
@@ -89,9 +90,9 @@ https://discord.gg/grhsdKj5Nx
 ## ⭐ Support
 If you enjoy this project, consider supporting it by:
 
-- Sharing the hub
-- Joining the Discord community
-- Reporting bugs
-- Suggesting new features
+- Sharing the hub  
+- Joining the Discord community  
+- Reporting bugs  
+- Suggesting new features  
 
-Your support helps improve **MidNightHub**.
+Your support helps improve **MidNight Hub** and keeps the project active.
