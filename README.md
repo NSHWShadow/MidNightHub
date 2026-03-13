@@ -81,7 +81,7 @@ Please respect the time and effort invested by the developers.
 ---
 
 ## 💬 Official Server
-Join the official **MidNight community** to receive updates, support, and announcements:
+Join the official **MidNight Discord Server** to receive updates, support, and announcements:
 
 https://discord.gg/grhsdKj5Nx
 
