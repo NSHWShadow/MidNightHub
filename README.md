@@ -36,13 +36,13 @@ This project was created and is maintained by the **NSHW Team**.
 ### 👑 Team Members
 
 > - **Founder:** @nshwshadow  
-  Discord ID: `904685000983736341`
-
+>   Discord ID: `904685000983736341`
+>
 > - **Developer:** @nzxdev_  
-  Discord ID: `1468421337201770627`
-
+>   Discord ID: `1468421337201770627`
+>
 > - **Developer:** @peter5887  
-  Discord ID: `1155283308415045662`
+>   Discord ID: `1155283308415045662`
 
 ---
 
