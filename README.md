@@ -19,7 +19,7 @@ The hub is **actively maintained and regularly updated** to stay compatible with
 
 ## ✨ Features
 > - Clean and optimized user interface  
-> - Fast and reliable script execution  
+> - Fast and reliable script 
 > - Frequent updates and improvements  
 > - Optimized performance  
 > - Modular script system  
