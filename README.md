@@ -9,7 +9,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/NSHWShadow/MidNightHu
 ---
 
 ## 📖 About
-**MidNightHub** is a Roblox script hub developed by the **MidNight Team**.  
+**MidNightHub** is a Roblox script hub developed by the **NSHW Team**.  
 The goal of this project is to provide a fast, stable, and user-friendly experience with useful automation features and a clean interface.
 
 The hub is actively maintained and updated to keep compatibility with supported games and new Roblox updates.
