@@ -28,7 +28,7 @@ This project was created and is maintained by the **NSHW Team**.
 > - **Developer:** @peter5887  
 >   Discord ID: `1155283308415045662`
 >
-> - **Developer:** @pocoyo.js
+> - **Developer:** @pocoyo.js  
 >   Discord ID: `1247963459602350080`
 
 ---
