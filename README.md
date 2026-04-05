@@ -17,19 +17,6 @@ The hub is **actively maintained and regularly updated** to stay compatible with
 
 ---
 
-## ✨ Features
-> - Clean and optimized user interface  
-> - Fast and reliable script 
-> - Frequent updates and improvements  
-> - Optimized performance  
-> - Modular script system  
-> - Simple and easy loader system  
-> - Community support  
-> - Easy-to-use key system  
-> - Beginner-friendly
-
----
-
 ## 📌 Credits
 This project was created and is maintained by the **NSHW Team**.
 
@@ -38,11 +25,18 @@ This project was created and is maintained by the **NSHW Team**.
 > - **Founder:** @nshwshadow  
 >   Discord ID: `904685000983736341`
 >
-> - **Developer:** @nzxdev_  
->   Discord ID: `1468421337201770627`
->
 > - **Developer:** @peter5887  
 >   Discord ID: `1155283308415045662`
+>
+> - **Developer:** @pocoyo.js 
+>   Discord ID: `1247963459602350080`
+
+---
+
+## 💬 Official Server
+Join the official **MidNight Discord Server** to receive updates, support, and announcements:
+
+MidNight: https://discord.gg/grhsdKj5Nx
 
 ---
 
@@ -51,19 +45,6 @@ This project uses external libraries to improve the user interface and overall e
 
 > - **RedzLib** — UI library used in this project  
 > - Original library creator: **@tlredz**
-
----
-
-## 🔄 Updates
-MidNightHub may receive updates including:
-
-> - New features  
-> - Performance improvements  
-> - Bug fixes  
-> - Game compatibility updates  
-> - User interface improvements  
-
-Always make sure you are using the **latest loader version** to avoid issues.
 
 ---
 
@@ -77,22 +58,3 @@ Please respect the rules below when using this project:
 > - Do **not claim this project as your own**.
 
 Please respect the work and time invested by the developers.
-
----
-
-## 💬 Official Server
-Join the official **MidNight Discord Server** to receive updates, support, and announcements:
-
-https://discord.gg/grhsdKj5Nx
-
----
-
-## ⭐ Support
-If you enjoy this project, consider supporting it by:
-
-> - Sharing the hub  
-> - Joining the Discord community  
-> - Reporting bugs  
-> - Suggesting new features  
-
-Your support helps improve **MidNight Hub** and keeps the project active.
