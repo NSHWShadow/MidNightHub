@@ -1,10 +1,3 @@
---// READ BEFORE USING THIS SOURCE
---// Credits: MidNight
-
---// Discord Team Name
---// Founder: @nshwshadow / Id --> 904685000983736341
---// Developer: @nzxdev_ / Id --> 1468421337201770627
-
 --// RedzLib included in main source
 --// Original library by GitHub user @tlredz
 
