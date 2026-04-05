@@ -1,11 +1,6 @@
 --// RedzLib included in main source
 --// Original library by GitHub user @tlredz
 
---// WARNING:
---// Removing, modifying, or hiding these credits is strictly prohibited.
---// Any use, modification, or redistribution of this source must retain proper credit.
---// Unauthorized use without attribution is not permitted.
-
 
 local a=cloneref or(function(...)return...end)
 
