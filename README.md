@@ -30,6 +30,7 @@ This project was created and is maintained by the **NSHW Team**.
 >
 > - **Developer:** @pocoyo.js 
 >   Discord ID: `1247963459602350080`
+>
 
 ---
 
