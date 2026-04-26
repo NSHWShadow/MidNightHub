@@ -443,7 +443,7 @@ keybox.FocusLost:Connect(function(enterPressed)
 end)
 
 getKeyBtn.MouseButton1Click:Connect(function()
-    setclipboard("https://ads.luarmor.net/get_key?for=MidNight_Hub__Key_System-dLnyEopHPYsm")
+    setclipboard("https://midnighthub-getkey.vercel.app/")
     getKeyBtn.Text = _("getKeyCopied")
     TweenService:Create(getKeyBtn, TweenInfo.new(0.3), {TextTransparency = 0.2}):Play()
     task.delay(1.8, function()
