@@ -1,0 +1,473 @@
+--// READ BEFORE USING THIS SOURCE
+--// Credits: MidNight
+--// Discord Team Name
+
+--// Founder: @nshwshadow / Id --> 904685000983736341
+--// Developer team leader: @pocoyo.js / Id --> 1247963459602350080
+--// Developer: @peterpines9 / id --> 1470202646722908242
+--// Developer: @draken13br / id --> 1222501858120306718
+
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local CoreGui = game:GetService("CoreGui")
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+local TeleportService = game:GetService("TeleportService")
+
+local placeScripts = {
+    [126509999114328] = "3845b4aacb2fbf85bbdc40d5625a9a17",
+    [131623223084840] = "d50d096921fc3d6157990616b5c64e97",
+    [77747658251236] = "edc1be702d0741c0d803d9cc44720fd7",
+    [89469502395769] = "35aa8469a0f4dfc15c99ae8f5c85d862"
+    [70845479499574] = "b82cd01dd19f31b4294e2742a5a0b083"
+}
+
+local currentPlaceId = game.PlaceId
+local script_id = placeScripts[currentPlaceId]
+
+if not script_id then
+    return
+end
+
+local api = loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.lua", true))()
+api.script_id = script_id
+
+local texts = {
+    english = {
+        title = "MIDNIGHT HUB",
+        subtitle = "Premium Access - Luarmor Protected",
+        keyPlaceholder = "Enter your key...",
+        verifyButton = "VERIFY KEY",
+        getKeyButton = "GET KEY",
+        discordText = "Join Discord → discord.gg/Wkj77kdgHS",
+        checking = "CHECKING...",
+        success = "SUCCESS",
+        successMsg = "Access Granted ✓",
+        welcomeMsg = "Welcome back, %s!",
+        emptyKey = "Enter a key!",
+        invalidKey = "Invalid Key! ❌",
+        hwidLocked = "Key linked to another HWID! 🔒",
+        keyError = "Key Error: %s",
+        getKeyCopied = "Copied!",
+        discordCopied = "Copied!"
+    },
+    portuguese = {
+        title = "MIDNIGHT HUB",
+        subtitle = "Acesso Premium - Protegido por Luarmor",
+        keyPlaceholder = "Digite sua chave...",
+        verifyButton = "VERIFICAR CHAVE",
+        getKeyButton = "OBTER CHAVE",
+        discordText = "Entre no Discord → discord.gg/Wkj77kdgHS",
+        checking = "VERIFICANDO...",
+        success = "SUCESSO",
+        successMsg = "Acesso Liberado ✓",
+        welcomeMsg = "Bem-vindo de volta, %s!",
+        emptyKey = "Digite uma chave!",
+        invalidKey = "Chave Inválida! ❌",
+        hwidLocked = "Chave vinculada a outro HWID! 🔒",
+        keyError = "Erro na Chave: %s",
+        getKeyCopied = "Copiado!",
+        discordCopied = "Copiado!"
+    },
+    vietnamese = {
+        title = "MIDNIGHT HUB",
+        subtitle = "Truy cập Cao cấp - Bảo vệ bởi Luarmor",
+        keyPlaceholder = "Nhập mã của bạn...",
+        verifyButton = "XÁC MINH MÃ",
+        getKeyButton = "LẤY MÃ",
+        discordText = "Tham gia Discord → discord.gg/Wkj77kdgHS",
+        checking = "ĐANG KIỂM TRA...",
+        success = "THÀNH CÔNG",
+        successMsg = "Đã cấp quyền truy cập ✓",
+        welcomeMsg = "Chào mừng trở lại, %s!",
+        emptyKey = "Nhập mã!",
+        invalidKey = "Mã không hợp lệ! ❌",
+        hwidLocked = "Mã đã liên kết với HWID khác! 🔒",
+        keyError = "Lỗi mã: %s",
+        getKeyCopied = "Đã sao chép!",
+        discordCopied = "Đã sao chép!"
+    }
+}
+
+local currentLang = "english"
+
+local function detectLanguage()
+    local success, result = pcall(function()
+        local apiUrl = "http://ip-api.com/json/?fields=countryCode"
+        local response = game:HttpGet(apiUrl)
+        local data = HttpService:JSONDecode(response)
+        
+        if data and data.countryCode then
+            if data.countryCode == "BR" or data.countryCode == "PT" then
+                return "portuguese"
+            elseif data.countryCode == "VN" then
+                return "vietnamese"
+            end
+        end
+    end)
+    
+    if success and result then
+        currentLang = result
+    end
+end
+
+detectLanguage()
+
+local function _(key)
+    return texts[currentLang][key] or texts.english[key]
+end
+
+local function safe_write(filename, data)
+    pcall(function()
+        if writefile then
+            writefile(filename, data)
+        elseif (writefile == nil) and pcall(function() return syn and syn.write_file end) then
+            syn.write_file(filename, data)
+        end
+    end)
+end
+
+local function safe_read(filename)
+    local ok, content = pcall(function()
+        if isfile and isfile(filename) then
+            return readfile(filename)
+        elseif pcall(function() return syn and syn.read_file end) and syn and syn.read_file(filename) then
+            return syn.read_file(filename)
+        end
+        return nil
+    end)
+    if ok and content and #content > 0 then
+        return content
+    end
+    return nil
+end
+
+local filename = "MidNightKey.txt"
+
+if CoreGui:FindFirstChild("MidNightKey") then
+    CoreGui.MidNightKey:Destroy()
+end
+
+local sg = Instance.new("ScreenGui")
+sg.Name = "MidNightKey"
+sg.Parent = CoreGui
+sg.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+sg.ResetOnSpawn = false
+
+local main = Instance.new("Frame")
+main.Name = "Main"
+main.Parent = sg
+main.AnchorPoint = Vector2.new(0.5, 0.5)
+main.BackgroundColor3 = Color3.fromRGB(18, 18, 22)
+main.BorderSizePixel = 0
+main.Position = UDim2.new(0.5, 0, 0.5, 0)
+main.Size = UDim2.new(0, 420, 0, 320)
+main.ClipsDescendants = true
+local mainCorner = Instance.new("UICorner")
+mainCorner.CornerRadius = UDim.new(0, 16)
+mainCorner.Parent = main
+
+local glow = Instance.new("ImageLabel")
+glow.Name = "Glow"
+glow.Parent = main
+glow.AnchorPoint = Vector2.new(0.5, 0.5)
+glow.BackgroundTransparency = 1
+glow.Position = UDim2.new(0.5, 0, 0.5, 0)
+glow.Size = UDim2.new(1.4, 0, 1.4, 0)
+glow.Image = "rbxassetid://82454449164045"
+glow.ImageColor3 = Color3.fromRGB(255, 60, 60)
+glow.ImageTransparency = 0.65
+glow.ZIndex = 0
+
+local logo = Instance.new("ImageLabel")
+logo.Parent = main
+logo.BackgroundTransparency = 1
+logo.Position = UDim2.new(0.04, 0, 0.06, 0)
+logo.Size = UDim2.new(0, 50, 0, 50)
+logo.Image = "rbxassetid://93559289273292"
+local logoCorner = Instance.new("UICorner")
+logoCorner.CornerRadius = UDim.new(0, 10)
+logoCorner.Parent = logo
+
+local title = Instance.new("TextLabel")
+title.Parent = main
+title.BackgroundTransparency = 1
+title.Position = UDim2.new(0.04, 50, 0.06, 0)
+title.Size = UDim2.new(0.9, 0, 0, 40)
+title.Font = Enum.Font.GothamBlack
+title.Text = _("title")
+title.TextColor3 = Color3.fromRGB(255, 40, 40)
+title.TextSize = 28
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.TextTransparency = 0.1
+
+local subtitle = Instance.new("TextLabel")
+subtitle.Parent = title
+subtitle.BackgroundTransparency = 1
+subtitle.Position = UDim2.new(0, 0, 1, -8)
+subtitle.Size = UDim2.new(1, 0, 0, 22)
+subtitle.Font = Enum.Font.Gotham
+subtitle.Text = _("subtitle")
+subtitle.TextColor3 = Color3.fromRGB(200, 200, 200)
+subtitle.TextSize = 14
+subtitle.TextXAlignment = Enum.TextXAlignment.Left
+
+local keybox = Instance.new("TextBox")
+keybox.Name = "KeyBox"
+keybox.Parent = main
+keybox.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
+keybox.BorderSizePixel = 0
+keybox.Position = UDim2.new(0.05, 0, 0.32, 0)
+keybox.Size = UDim2.new(0.9, 0, 0, 52)
+keybox.Font = Enum.Font.GothamSemibold
+keybox.PlaceholderColor3 = Color3.fromRGB(120, 120, 140)
+keybox.PlaceholderText = _("keyPlaceholder")
+keybox.Text = ""
+keybox.TextColor3 = Color3.fromRGB(240, 240, 240)
+keybox.TextSize = 17
+keybox.ClearTextOnFocus = false
+local keyCorner = Instance.new("UICorner")
+keyCorner.CornerRadius = UDim.new(0, 12)
+keyCorner.Parent = keybox
+
+local submit = Instance.new("TextButton")
+submit.Name = "Submit"
+submit.Parent = main
+submit.BackgroundColor3 = Color3.fromRGB(220, 40, 40)
+submit.BorderSizePixel = 0
+submit.Position = UDim2.new(0.05, 0, 0.50, 0)
+submit.Size = UDim2.new(0.9, 0, 0, 52)
+submit.Font = Enum.Font.GothamBold
+submit.Text = _("verifyButton")
+submit.TextColor3 = Color3.fromRGB(255, 255, 255)
+submit.TextSize = 18
+local submitCorner = Instance.new("UICorner")
+submitCorner.CornerRadius = UDim.new(0, 12)
+submitCorner.Parent = submit
+
+local getKeyBtn = Instance.new("TextButton")
+getKeyBtn.Parent = main
+getKeyBtn.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
+getKeyBtn.BorderSizePixel = 0
+getKeyBtn.Position = UDim2.new(0.05, 0, 0.68, 0)
+getKeyBtn.Size = UDim2.new(0.9, 0, 0, 40)
+getKeyBtn.Font = Enum.Font.GothamBold
+getKeyBtn.Text = _("getKeyButton")
+getKeyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+getKeyBtn.TextSize = 16
+local getKeyCorner = Instance.new("UICorner")
+getKeyCorner.CornerRadius = UDim.new(0, 10)
+getKeyCorner.Parent = getKeyBtn
+
+local discordBtn = Instance.new("TextButton")
+discordBtn.Parent = main
+discordBtn.BackgroundTransparency = 1
+discordBtn.Position = UDim2.new(0.05, 0, 0.80, 0)
+discordBtn.Size = UDim2.new(0.9, 0, 0, 30)
+discordBtn.Font = Enum.Font.Gotham
+discordBtn.Text = _("discordText")
+discordBtn.TextColor3 = Color3.fromRGB(180, 180, 255)
+discordBtn.TextSize = 14
+discordBtn.TextXAlignment = Enum.TextXAlignment.Left
+local discordCorner = Instance.new("UICorner")
+discordCorner.CornerRadius = UDim.new(0, 8)
+discordCorner.Parent = discordBtn
+
+local status = Instance.new("TextLabel")
+status.Parent = main
+status.BackgroundTransparency = 1
+status.Position = UDim2.new(0.05, 0, 0.86, 0)
+status.Size = UDim2.new(0.9, 0, 0, 30)
+status.Font = Enum.Font.GothamSemibold
+status.Text = ""
+status.TextColor3 = Color3.fromRGB(255, 100, 100)
+status.TextSize = 15
+status.TextTransparency = 1
+
+local welcome = Instance.new("TextLabel")
+welcome.Parent = main
+welcome.BackgroundTransparency = 1
+welcome.Position = UDim2.new(0.05, 0, 0.92, 0)
+welcome.Size = UDim2.new(0.9, 0, 0, 30)
+welcome.Font = Enum.Font.GothamBold
+welcome.Text = ""
+welcome.TextColor3 = Color3.fromRGB(80, 255, 120)
+welcome.TextSize = 16
+welcome.TextTransparency = 1
+
+local function hoverEffect(btn, normal, hover)
+    btn.MouseEnter:Connect(function()
+        TweenService:Create(btn, TweenInfo.new(0.25, Enum.EasingStyle.Quint), {BackgroundColor3 = hover}):Play()
+    end)
+    btn.MouseLeave:Connect(function()
+        TweenService:Create(btn, TweenInfo.new(0.25, Enum.EasingStyle.Quint), {BackgroundColor3 = normal}):Play()
+    end)
+end
+
+hoverEffect(submit, Color3.fromRGB(220, 40, 40), Color3.fromRGB(240, 60, 60))
+
+local function hoverEffectGetKey(btn, normal, hover)
+    btn.MouseEnter:Connect(function()
+        TweenService:Create(btn, TweenInfo.new(0.25, Enum.EasingStyle.Quint), {BackgroundColor3 = hover}):Play()
+    end)
+    btn.MouseLeave:Connect(function()
+        TweenService:Create(btn, TweenInfo.new(0.25, Enum.EasingStyle.Quint), {BackgroundColor3 = normal}):Play()
+    end)
+end
+hoverEffectGetKey(getKeyBtn, Color3.fromRGB(25, 25, 30), Color3.fromRGB(40, 40, 45))
+
+main.Position = UDim2.new(0.5, 0, 0.5, 100)
+main.BackgroundTransparency = 1
+TweenService:Create(main, TweenInfo.new(0.6, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Position = UDim2.new(0.5, 0, 0.5, 0)}):Play()
+TweenService:Create(main, TweenInfo.new(0.8, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+
+local dragging, dragInput, dragStart, startPos
+local function update(input)
+    local delta = input.Position - dragStart
+    local newPos = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    main.Position = newPos
+end
+
+main.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = main.Position
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then dragging = false end
+        end)
+    end
+end)
+
+main.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        dragInput = input
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if input == dragInput and dragging then update(input) end
+end)
+
+local function verifyKey()
+    local key = keybox.Text or ""
+    key = key:gsub("%s+", "")
+
+    if key == "" then
+        status.Text = _("emptyKey")
+        status.TextColor3 = Color3.fromRGB(255, 100, 100)
+        TweenService:Create(status, TweenInfo.new(0.3), {TextTransparency = 0}):Play()
+        task.delay(2.5, function() TweenService:Create(status, TweenInfo.new(0.5), {TextTransparency = 1}):Play() end)
+        return
+    end
+
+    submit.Text = _("checking")
+    submit.BackgroundColor3 = Color3.fromRGB(180, 30, 30)
+    submit.Active = false
+
+    getgenv().script_key = key
+    
+    local statusResult = api.check_key(key)
+    
+    if statusResult and statusResult.code == "KEY_VALID" then
+        safe_write(filename, key)
+        
+        status.Text = _("successMsg")
+        status.TextColor3 = Color3.fromRGB(80, 255, 120)
+        TweenService:Create(status, TweenInfo.new(0.35, Enum.EasingStyle.Quad), {TextTransparency = 0}):Play()
+
+        welcome.Text = string.format(_("welcomeMsg"), Players.LocalPlayer.DisplayName)
+        TweenService:Create(welcome, TweenInfo.new(0.45, Enum.EasingStyle.Quad), {TextTransparency = 0}):Play()
+
+        submit.Text = _("success")
+        submit.BackgroundColor3 = Color3.fromRGB(40, 180, 40)
+
+        task.delay(1.1, function()
+            TweenService:Create(main, TweenInfo.new(0.7, Enum.EasingStyle.Back, Enum.EasingDirection.In), {
+                Position = UDim2.new(0.5, 0, -1, 0)
+            }):Play()
+            TweenService:Create(main, TweenInfo.new(0.65), {BackgroundTransparency = 1}):Play()
+            TweenService:Create(status, TweenInfo.new(0.45), {TextTransparency = 1}):Play()
+            TweenService:Create(welcome, TweenInfo.new(0.45), {TextTransparency = 1}):Play()
+
+            task.delay(0.8, function()
+                if sg then sg:Destroy() end
+                pcall(function()
+                    api.load_script()
+                end)
+            end)
+        end)
+        
+    elseif statusResult and statusResult.code == "KEY_HWID_LOCKED" then
+        status.Text = _("hwidLocked")
+        status.TextColor3 = Color3.fromRGB(255, 150, 0)
+        TweenService:Create(status, TweenInfo.new(0.3), {TextTransparency = 0}):Play()
+        resetButton()
+        
+    elseif statusResult and statusResult.code == "KEY_INCORRECT" then
+        status.Text = _("invalidKey")
+        status.TextColor3 = Color3.fromRGB(255, 80, 80)
+        TweenService:Create(status, TweenInfo.new(0.3), {TextTransparency = 0}):Play()
+        resetButton()
+        
+    else
+        local errorMsg = statusResult and statusResult.message or "Unknown error"
+        status.Text = string.format(_("keyError"), errorMsg)
+        status.TextColor3 = Color3.fromRGB(255, 80, 80)
+        TweenService:Create(status, TweenInfo.new(0.3), {TextTransparency = 0}):Play()
+        resetButton()
+    end
+end
+
+local function resetButton()
+    submit.Text = _("verifyButton")
+    submit.BackgroundColor3 = Color3.fromRGB(220, 40, 40)
+    submit.Active = true
+    
+    local originalPos = submit.Position
+    for i = 1, 3 do
+        TweenService:Create(submit, TweenInfo.new(0.05), {Position = UDim2.new(0.05, -5, 0.50, 0)}):Play()
+        task.wait(0.05)
+        TweenService:Create(submit, TweenInfo.new(0.05), {Position = UDim2.new(0.05, 5, 0.50, 0)}):Play()
+        task.wait(0.05)
+    end
+    TweenService:Create(submit, TweenInfo.new(0.1), {Position = UDim2.new(0.05, 0, 0.50, 0)}):Play()
+    
+    task.delay(3, function() 
+        TweenService:Create(status, TweenInfo.new(0.5), {TextTransparency = 1}):Play()
+    end)
+    
+    getgenv().script_key = nil
+end
+
+submit.MouseButton1Click:Connect(verifyKey)
+keybox.FocusLost:Connect(function(enterPressed)
+    if enterPressed then verifyKey() end
+end)
+
+getKeyBtn.MouseButton1Click:Connect(function()
+    setclipboard("https://midnighthub-getkey.vercel.app/")
+    getKeyBtn.Text = _("getKeyCopied")
+    TweenService:Create(getKeyBtn, TweenInfo.new(0.3), {TextTransparency = 0.2}):Play()
+    task.delay(1.8, function()
+        TweenService:Create(getKeyBtn, TweenInfo.new(0.3), {TextTransparency = 0}):Play()
+        getKeyBtn.Text = _("getKeyButton")
+    end)
+end)
+
+discordBtn.MouseButton1Click:Connect(function()
+    setclipboard("https://discord.gg/Wkj77kdgHS")
+    discordBtn.Text = _("discordCopied")
+    TweenService:Create(discordBtn, TweenInfo.new(0.3), {TextTransparency = 0.2}):Play()
+    task.delay(1.8, function()
+        TweenService:Create(discordBtn, TweenInfo.new(0.3), {TextTransparency = 0}):Play()
+        discordBtn.Text = _("discordText")
+    end)
+end)
+
+local saved = safe_read(filename)
+if saved then
+    keybox.Text = saved
+    getgenv().script_key = saved
+    verifyKey()
+end
