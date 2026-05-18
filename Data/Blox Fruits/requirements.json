@@ -1,0 +1,13 @@
+{
+  "BlackLeg":       { "beli": 150000,  "fragments": 0,    "items": [] },
+  "Electro":        { "beli": 500000,  "fragments": 0,    "items": [] },
+  "FishmanKarate":  { "beli": 750000,  "fragments": 0,    "items": [] },
+  "DragonClaw":     { "beli": 0,       "fragments": 1500, "items": [] },
+  "Superhuman":     { "beli": 3000000, "fragments": 0,    "items": [] },
+  "DeathStep":      { "beli": 2000000, "fragments": 5000, "items": ["Library Key"] },
+  "SharkmanKarate": { "beli": 2000000, "fragments": 5000, "items": ["Water Key"] },
+  "ElectricClaw":   { "beli": 3000000, "fragments": 5000, "items": [] },
+  "DragonTalon":    { "beli": 3000000, "fragments": 5000, "items": ["Fire Essence"] },
+  "Godhuman":       { "beli": 5000000, "fragments": 5000, "items": ["Fish Tail", "Magma Ore", "Mystic Droplet", "Dragon Scale"] },
+  "SanguineArt":    { "beli": 5000000, "fragments": 5000, "items": ["Leviathan Heart", "Dark Fragment", "Vampire Fang", "Demonic Wisp"] }
+}
