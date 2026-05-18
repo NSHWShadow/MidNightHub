@@ -1,0 +1,7 @@
+{
+  "Slingshot": { "label": "Slingshot [ 5,000 Beli ]", "remote": "BuyItem" },
+  "Musket": { "label": "Musket [ 8,000 Beli ]", "remote": "BuyItem" },
+  "Flintlock": { "label": "Flintlock [ 10,500 Beli ]", "remote": "BuyItem" },
+  "Refined Flintlock": { "label": "Refined Flintlock [ 65,000 Beli ]", "remote": "BuyItem" },
+  "Cannon": { "label": "Cannon [ 100,000 Beli ]", "remote": "BuyItem" }
+}
