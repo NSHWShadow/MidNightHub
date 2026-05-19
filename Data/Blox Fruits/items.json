@@ -1,0 +1,23 @@
+{
+  "swords": [
+    { "label": "Cutlass",           "item": "Cutlass",           "price": 1000,    "currency": "Beli",      "minSea": 1 },
+    { "label": "Katana",            "item": "Katana",            "price": 1000,    "currency": "Beli",      "minSea": 1 },
+    { "label": "Iron Mace",         "item": "Iron Mace",         "price": 25000,   "currency": "Beli",      "minSea": 1 },
+    { "label": "Dual Katana",       "item": "Duel Katana",       "price": 12000,   "currency": "Beli",      "minSea": 1 },
+    { "label": "Triple Katana",     "item": "Triple Katana",     "price": 60000,   "currency": "Beli",      "minSea": 1 },
+    { "label": "Pipe",              "item": "Pipe",              "price": 100000,  "currency": "Beli",      "minSea": 1 },
+    { "label": "Dual-Headed Blade", "item": "Dual-Headed Blade", "price": 400000,  "currency": "Beli",      "minSea": 1 },
+    { "label": "Bisento",           "item": "Bisento",           "price": 1200000, "currency": "Beli",      "minSea": 1 },
+    { "label": "Soul Cane",         "item": "Soul Cane",         "price": 750000,  "currency": "Beli",      "minSea": 1 },
+    { "label": "Pole v2",           "item": "ThunderGodTalk",    "price": 5000,    "currency": "Fragments", "minSea": 2, "remote": "ThunderGodTalk" }
+  ],
+  "guns": [
+    { "label": "Slingshot",         "item": "Slingshot",         "price": 5000,    "currency": "Beli",      "minSea": 1 },
+    { "label": "Musket",            "item": "Musket",            "price": 8000,    "currency": "Beli",      "minSea": 1 },
+    { "label": "Flintlock",         "item": "Flintlock",         "price": 10500,   "currency": "Beli",      "minSea": 1 },
+    { "label": "Refined Flintlock", "item": "Refined Flintlock", "price": 65000,   "currency": "Beli",      "minSea": 1 },
+    { "label": "Cannon",            "item": "Cannon",            "price": 100000,  "currency": "Beli",      "minSea": 1 },
+    { "label": "Kabucha",           "item": "Slingshot",         "price": 1500,    "currency": "Fragments", "minSea": 2, "remote": "BlackbeardReward" },
+    { "label": "Bizarre Rifle",     "item": "Bizarre Rifle",     "price": 250,     "currency": "Ectoplasm", "minSea": 2, "remote": "Ectoplasm" }
+  ]
+}

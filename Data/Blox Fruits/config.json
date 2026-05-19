@@ -1,0 +1,31 @@
+{
+  "seas": [
+    {
+      "id": 1,
+      "name": "Sea 1 (East Blue)",
+      "placeIds": [2753915549, 85211729168715]
+    },
+    {
+      "id": 2,
+      "name": "Sea 2 (New World)",
+      "placeIds": [4442272183, 79091703265657]
+    },
+    {
+      "id": 3,
+      "name": "Sea 3 (Third Sea)",
+      "placeIds": [7449423635, 100117331123089]
+    }
+  ],
+  "hakis": [
+    { "label": "Air Jump",         "price": 10000,  "currency": "Beli", "remote": "BuyHaki", "arg": "Geppo",  "minSea": 1 },
+    { "label": "Armament Haki",    "price": 25000,  "currency": "Beli", "remote": "BuyHaki", "arg": "Buso",   "minSea": 1 },
+    { "label": "Observation Haki", "price": 750000, "currency": "Beli", "remote": "KenTalk", "arg": "Buy",    "minSea": 1 },
+    { "label": "Soru",             "price": 100000, "currency": "Beli", "remote": "BuyHaki", "arg": "Soru",   "minSea": 1 }
+  ],
+  "others": [
+    { "label": "Reset Stats",   "price": 2500, "currency": "Fragments", "remote": "BlackbeardReward", "args": ["Refund", "1", "2"],  "minSea": 1 },
+    { "label": "Change Race",   "price": 3000, "currency": "Fragments", "remote": "BlackbeardReward", "args": ["Reroll", "1", "2"],  "minSea": 1 },
+    { "label": "Demon Race (Ghoul)", "price": 0, "currency": "Ectoplasm", "remote": "Ectoplasm",     "args": ["Change", 4],         "minSea": 1 },
+    { "label": "Cyborg Race",   "price": 2500, "currency": "Fragments", "remote": "CyborgTrainer",   "args": ["Buy"],               "minSea": 2 }
+  ]
+}

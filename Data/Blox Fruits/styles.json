@@ -1,0 +1,165 @@
+{
+  "styles": {
+    "DarkStep": {
+      "name": "Dark Step",
+      "price": 150000,
+      "currency": "Beli",
+      "remote": "BuyBlackLeg",
+      "checkRemote": ["BuyBlackLeg", true],
+      "minSea": 1,
+      "pos": {
+        "1": [-984.243652, 13.7937174, 3988.15283, -0.898007274, 4.96364301e-8, 0.439980626, -5.22167465e-9, 1, -1.23472546e-7, -0.439980626, -1.13176682e-7, -0.898007274],
+        "2": [-4754.95947, 35.0840416, -4848.021, -0.18977046, -3.75858278e-8, -0.981828511, 4.88502074e-8, 1, -4.77233613e-8, 0.981828511, -5.70190117e-8, -0.18977046],
+        "3": [-5046.60205, 371.354706, -3180.77124, 0.892543674, -3.75730735e-8, 0.450960934, 3.43178428e-8, 1, 1.53957913e-8, -0.450960934, 1.73459103e-9, 0.892543674]
+      }
+    },
+    "Electro": {
+      "name": "Electro",
+      "price": 500000,
+      "currency": "Beli",
+      "remote": "BuyElectro",
+      "checkRemote": ["BuyElectro", true],
+      "minSea": 1,
+      "pos": {
+        "1": [-5384.41943, 13.8544741, -2144.91357, -0.0898939818, 2.95553306e-8, -0.995951355, -3.93072419e-8, 1, 3.32233263e-8, 0.995951355, 4.21346797e-8, -0.0898939818],
+        "2": [-4863.11377, 35.083889, -4766.9541, -0.727312684, 4.80018425e-9, 0.686306238, 4.46480852e-9, 1, -2.26265229e-9, -0.686306238, 1.41857037e-9, -0.727312684],
+        "3": [-4988.62549, 314.557678, -3197.1333, -0.954031229, 5.51584272e-8, 0.299707174, 6.11437798e-8, 1, 1.05925091e-8, -0.299707174, 2.8430815e-8, -0.954031229]
+      }
+    },
+    "WaterKungFu": {
+      "name": "Water Kung Fu",
+      "price": 750000,
+      "currency": "Beli",
+      "remote": "BuyFishmanKarate",
+      "checkRemote": ["BuyFishmanKarate", true],
+      "minSea": 1,
+      "pos": {
+        "1": [61578.9805, 18.9127026, 989.94104, -0.294035763, -1.21163612e-8, 0.955794394, -5.77786956e-8, 1, -5.09800246e-9, -0.955794394, -5.67235503e-8, -0.294035763],
+        "2": [-4956.66357, 35.0828667, -4672.02197, -0.984949291, -4.29820481e-8, -0.172843441, -2.94839779e-8, 1, -8.06615787e-8, 0.172843441, -7.43514548e-8, -0.984949291],
+        "3": [-5021.4624, 371.354706, -3189.26465, 0.016076237, 7.47057793e-9, 0.999870777, 2.62633169e-8, 1, -7.8938136e-9, -0.999870777, 2.63868269e-8, 0.016076237]
+      }
+    },
+    "DragonBreath": {
+      "name": "Dragon Breath",
+      "price": 1500,
+      "currency": "Fragments",
+      "remote": "BlackbeardReward",
+      "checkRemote": ["BlackbeardReward", "DragonClaw", "1"],
+      "minSea": 2,
+      "pos": {
+        "2": [700.766174, 187.001999, 657.537415, -0.915879846, -5.91981504e-8, 0.401452452, -6.50383924e-8, 1, -9.19662457e-10, -0.401452452, -2.69521223e-8, -0.915879846],
+        "3": [-4973.41113, 371.354706, -3209.07666, 0.845146894, 1.80170421e-8, 0.534534097, -2.18616556e-8, 1, 8.5919577e-10, -0.534534097, -1.2411947e-8, 0.845146894]
+      }
+    },
+    "DeathStep": {
+      "name": "Death Step",
+      "price": 2500000,
+      "currency": "Beli",
+      "extraPrice": 5000,
+      "extraCurrency": "Fragments",
+      "remote": "BuyDeathStep",
+      "checkRemote": ["BuyDeathStep", true],
+      "minSea": 2,
+      "requiredItem": "Library Key",
+      "requiredStyle": "DarkStep",
+      "requiredMastery": 450,
+      "pos": {
+        "2": [6357.33057, 296.707031, -6763.7085, -0.862572134, 5.73927927e-9, 0.505934119, -9.81766402e-9, 1, -2.80821606e-8, -0.505934119, -2.91899802e-8, -0.862572134],
+        "3": [-4997.7793, 314.557678, -3221.90625, 0.362204373, -2.07773603e-8, 0.932098687, 1.57575304e-8, 1, 1.61677232e-8, -0.932098687, 8.83155415e-9, 0.362204373]
+      }
+    },
+    "SharkmanKarate": {
+      "name": "Sharkman Karate",
+      "price": 2500000,
+      "currency": "Beli",
+      "extraPrice": 5000,
+      "extraCurrency": "Fragments",
+      "remote": "BuySharkmanKarate",
+      "checkRemote": ["BuySharkmanKarate", true],
+      "minSea": 2,
+      "requiredItem": "Water Key",
+      "requiredStyle": "WaterKungFu",
+      "requiredMastery": 450,
+      "pos": {
+        "2": [-2603.15039, 239.44812, -10314.6357, -0.498798579, -4.59077789e-8, -0.866717935, 5.27146646e-8, 1, -8.33048119e-8, 0.866717935, -8.72410695e-8, -0.498798579],
+        "3": [-4968.85547, 314.557678, -3222.58643, 0.974218249, 1.22720153e-10, 0.225607544, 7.04895031e-10, 1, -3.58783114e-9, -0.225607544, 3.65436037e-9, 0.974218249]
+      }
+    },
+    "Superhuman": {
+      "name": "Superhuman",
+      "price": 3000000,
+      "currency": "Beli",
+      "remote": "BuySuperhuman",
+      "checkRemote": ["BuySuperhuman", true],
+      "minSea": 2,
+      "requiredMastery": 300,
+      "requiredStyles": ["DarkStep", "Electro", "WaterKungFu", "DragonBreath"],
+      "pos": {
+        "2": [1382.89429, 247.469711, -5183.49463, 0.135376737, -6.12874418e-9, 0.990794182, 4.50683899e-8, 1, 2.77886984e-11, -0.990794182, 4.46497346e-8, 0.135376737],
+        "3": [-5003.11816, 371.354706, -3196.15356, 0.967201352, -8.64944312e-8, -0.254010975, 8.29976585e-8, 1, -2.44831533e-8, 0.254010975, 2.59782329e-9, 0.967201352]
+      }
+    },
+    "ElectricClaw": {
+      "name": "Electric Claw",
+      "price": 3000000,
+      "currency": "Beli",
+      "extraPrice": 5000,
+      "extraCurrency": "Fragments",
+      "remote": "BuyElectricClaw",
+      "checkRemote": ["BuyElectricClaw", true],
+      "minSea": 3,
+      "requiredStyle": "Electro",
+      "requiredMastery": 450,
+      "pos": {
+        "3": [-10366.5469, 331.695923, -10123.6709, 0.982088268, 7.5207307e-9, 0.188421562, -5.68869707e-9, 1, -1.02638378e-8, -0.188421562, 9.00812136e-9, 0.982088268]
+      }
+    },
+    "DragonTalon": {
+      "name": "Dragon Talon",
+      "price": 3000000,
+      "currency": "Beli",
+      "extraPrice": 5000,
+      "extraCurrency": "Fragments",
+      "remote": "BuyDragonTalon",
+      "checkRemote": ["BuyDragonTalon", true],
+      "minSea": 3,
+      "requiredItem": "Fire Essence",
+      "requiredStyle": "DragonBreath",
+      "requiredMastery": 450,
+      "pos": {
+        "3": [5659.05713, 1211.31946, 858.908569, -0.45245111, -2.14960512e-8, 0.891789198, -3.40120399e-9, 1, 2.2378801e-8, -0.891789198, 7.0921562e-9, -0.45245111]
+      }
+    },
+    "Godhuman": {
+      "name": "Godhuman",
+      "price": 5000000,
+      "currency": "Beli",
+      "extraPrice": 5000,
+      "extraCurrency": "Fragments",
+      "remote": "BuyGodhuman",
+      "checkRemote": ["BuyGodhuman", true],
+      "minSea": 3,
+      "requiredMastery": 450,
+      "requiredStyles": ["DarkStep", "Electro", "WaterKungFu", "DragonBreath", "DeathStep", "SharkmanKarate", "ElectricClaw", "DragonTalon"],
+      "requiredMaterials": [["Fish Tail", 20], ["Magma Ore", 20], ["Dragon Scale", 10], ["Mystic Droplet", 10]],
+      "pos": {
+        "3": [-13772.2998, 334.664215, -9881.54785, 0.909656346, -2.77267294e-8, 0.415361643, 2.57530157e-8, 1, 1.03532303e-8, -0.415361643, 1.27893285e-9, 0.909656346]
+      }
+    },
+    "SanguineArt": {
+      "name": "Sanguine Art",
+      "price": 5000000,
+      "currency": "Beli",
+      "extraPrice": 5000,
+      "extraCurrency": "Fragments",
+      "remote": "BuySanguineArt",
+      "checkRemote": ["BuySanguineArt", true],
+      "minSea": 3,
+      "requiredMastery": 500,
+      "requiredMaterials": [["Leviathan Heart", 1], ["Demonic Wisp", 20], ["Vampire Fang", 20]],
+      "pos": {
+        "3": [-16353, 160, 99, 1, 0, 0, 0, 1, 0, 0, 0, 1]
+      }
+    }
+  }
+}
