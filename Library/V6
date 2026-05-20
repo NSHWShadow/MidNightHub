@@ -570,7 +570,7 @@ function redzlib:SetScale(NewScale)
 	UIScale, ScreenGui.Scale.Scale = NewScale, NewScale
 end
 
--- SISTEMA DE NOTIFICACOES INTEGRADO
+-- SISTEMA DE NOTIFICACOES INTEGRADO (POLIDO COM CANVASGROUP)
 local NotificationHolder
 local function GetNotificationHolder()
 	if not NotificationHolder then
@@ -600,10 +600,10 @@ function redzlib:Notify(Configs)
 	
 	local Holder = GetNotificationHolder()
 	
-	local Frame = Create("Frame", Holder, {
+	local Frame = Create("CanvasGroup", Holder, {
 		Size = UDim2.new(1, 0, 0, 0),
 		AutomaticSize = "Y",
-		BackgroundTransparency = 0.05,
+		GroupTransparency = 1, -- Inicia invisível
 		BackgroundColor3 = Theme["Color Hub 2"],
 		Name = "Notification"
 	})Make("Corner", Frame)Make("Stroke", Frame)Make("Gradient", Frame, {Rotation = 45})
@@ -674,17 +674,14 @@ function redzlib:Notify(Configs)
 		BorderSizePixel = 0
 	})
 	
-	Frame.Size = UDim2.new(1, 0, 0, 0)
-	Frame.Position = UDim2.new(1.2, 0, 0, 0)
-	
-	CreateTween({Frame, "Position", UDim2.new(0, 0, 0, 0), 0.3})
+	CreateTween({Frame, "GroupTransparency", 0, 0.3})
 	CreateTween({Bar, "Size", UDim2.new(0, 0, 1, 0), NDuration})
 	
 	local closed = false
 	local function dismiss()
 		if closed then return end
 		closed = true
-		CreateTween({Frame, "Position", UDim2.new(1.2, 0, 0, 0), 0.3, true})
+		CreateTween({Frame, "GroupTransparency", 1, 0.3, true})
 		Frame:Destroy()
 	end
 	
@@ -1690,9 +1687,9 @@ function redzlib:MakeWindow(Configs)
 			end
 			
 			Button.Activated:Connect(Minimize)
-			NoClickFrame.MouseButton1Down:Connect(Disable)
-			NoClickFrame.MouseButton1Click:Connect(Disable)
-			MainFrame:GetPropertyChangedSignal("Visible"):Connect(Disable)
+			NoClickFrame.MouseButton1Down:Connect(Minimize)
+			NoClickFrame.MouseButton1Click:Connect(Minimize)
+			MainFrame:GetPropertyChangedSignal("Visible"):Connect(Minimize)
 			SelectedFrame:GetPropertyChangedSignal("AbsolutePosition"):Connect(CalculatePos)
 			
 			Button.Activated:Connect(CalculateSize)
@@ -1786,11 +1783,10 @@ function redzlib:MakeWindow(Configs)
 			}), "Theme")Make("Corner", Indicator)
 			
 			local SliderIcon = Create("Frame", SliderBar, {
-				Size = UDim2.new(0, 6, 0, 12),
-				BackgroundColor3 = Color3.fromRGB(220, 220, 220),
+				Size = UDim2.new(0, 6, 0, 10),
 				Position = UDim2.fromScale(0.3, 0.5),
 				AnchorPoint = Vector2.new(0.5, 0.5),
-				BackgroundTransparency = 0.2
+				BackgroundColor3 = Color3.fromRGB(220, 220, 220)
 			})Make("Corner", SliderIcon)
 			
 			local LabelVal = InsertTheme(Create("TextLabel", SliderHolder, {
@@ -2045,118 +2041,31 @@ function redzlib:MakeWindow(Configs)
 			return DiscordInvite
 		end
 		
-		-- ELEMENTO DE KEYBIND (NOVO)
-		function Tab:AddKeybind(Configs)
-			local KName = Configs[1] or Configs.Name or Configs.Title or "Keybind"
-			local KDesc = Configs.Desc or Configs.Description or ""
-			local Default = Configs[2] or Configs.Default or Enum.KeyCode.E
-			local Callback = Funcs:GetCallback(Configs, 3)
-			local Flag = Configs[4] or Configs.Flag or false
-			
-			if CheckFlag(Flag) then
-				local saved = GetFlag(Flag)
-				if saved then
-					local s, keyCode = pcall(function() return Enum.KeyCode[saved] end)
-					if s then Default = keyCode end
-				end
-			end
-			
-			local Button, LabelFunc = ButtonFrame(Container, KName, KDesc, UDim2.new(1, -120))
-			
-			local BindFrame = InsertTheme(Create("Frame", Button, {
-				Size = UDim2.new(0, 80, 0, 18),
-				Position = UDim2.new(1, -10, 0.5),
-				AnchorPoint = Vector2.new(1, 0.5),
-				BackgroundColor3 = Theme["Color Hub 2"]
-			}), "Frame")Make("Corner", BindFrame, UDim.new(0, 4))Make("Stroke", BindFrame)
-			
-			local BindLabel = InsertTheme(Create("TextLabel", BindFrame, {
-				Size = UDim2.new(1, 0, 1, 0),
-				BackgroundTransparency = 1,
-				Font = Enum.Font.GothamBold,
-				TextSize = 9,
-				TextColor3 = Theme["Color Text"],
-				Text = Default.Name
-			}), "Text")
-			
-			local CurrentKey = Default
-			local Binding = false
-			local GlobalConnection
-			
-			local function SetupGlobalListener()
-				if GlobalConnection then GlobalConnection:Disconnect() end
-				GlobalConnection = UserInputService.InputBegan:Connect(function(Input, Processed)
-					if not Processed and Input.KeyCode == CurrentKey then
-						Funcs:FireCallback(Callback, CurrentKey)
-					end
-				end)
-			end
-			SetupGlobalListener()
-			
-			Button.Activated:Connect(function()
-				if Binding then return end
-				Binding = true
-				BindLabel.Text = "..."
-				
-				local Connection
-				Connection = UserInputService.InputBegan:Connect(function(Input)
-					if Input.UserInputType == Enum.UserInputType.Keyboard then
-						local Key = Input.KeyCode
-						if Key ~= Enum.KeyCode.Escape then
-							CurrentKey = Key
-							BindLabel.Text = Key.Name
-							SetFlag(Flag, Key.Name)
-							SetupGlobalListener()
-						else
-							BindLabel.Text = CurrentKey.Name
-						end
-						Connection:Disconnect()
-						Binding = false
-					end
-				end)
-			end)
-			
-			local Keybind = {}
-			function Keybind:Visible(...) Funcs:ToggleVisible(Button, ...) end
-			function Keybind:Destroy() 
-				if GlobalConnection then GlobalConnection:Disconnect() end
-				Button:Destroy() 
-			end
-			function Keybind:Set(NewKey)
-				if typeof(NewKey) == "EnumItem" then
-					CurrentKey = NewKey
-					BindLabel.Text = NewKey.Name
-					SetFlag(Flag, NewKey.Name)
-					SetupGlobalListener()
-				end
-			end
-			return Keybind
-		end
-
-		-- ELEMENTO DE COLOR PICKER (NOVO)
+		-- ELEMENTO DE COLOR PICKER AVANCADO (CONFORME SOLICITADO)
 		function Tab:AddColorpicker(Configs)
 			local CName = Configs[1] or Configs.Name or Configs.Title or "Colorpicker"
 			local CDesc = Configs.Desc or Configs.Description or ""
 			local Default = Configs[2] or Configs.Default or Color3.fromRGB(255, 40, 40)
 			local Callback = Funcs:GetCallback(Configs, 3)
 			local Flag = Configs[4] or Configs.Flag or false
-			
+
 			if CheckFlag(Flag) then
 				local saved = GetFlag(Flag)
 				if saved and saved.R and saved.G and saved.B then
 					Default = Color3.new(saved.R, saved.G, saved.B)
 				end
 			end
-			
+
 			local Button, LabelFunc = ButtonFrame(Container, CName, CDesc, UDim2.new(1, -60))
-			
-			local ColorIndicator = InsertTheme(Create("Frame", Button, {
+
+			local ColorIndicator = Create("Frame", Button, {
 				Size = UDim2.new(0, 24, 0, 14),
 				Position = UDim2.new(1, -10, 0.5),
 				AnchorPoint = Vector2.new(1, 0.5),
 				BackgroundColor3 = Default
-			}), "Stroke")Make("Corner", ColorIndicator, UDim.new(0, 3))
-			
+			})Make("Corner", ColorIndicator, UDim.new(0, 3))
+			Make("Stroke", ColorIndicator, {}, Theme["Color Stroke"])
+
 			local NoClickFrame = Create("TextButton", DropdownHolder, {
 				Name = "AntiClick",
 				Size = UDim2.new(1, 0, 1, 0),
@@ -2164,144 +2073,243 @@ function redzlib:MakeWindow(Configs)
 				Visible = false,
 				Text = ""
 			})
-			
-			local DropFrame = Create("Frame", NoClickFrame, {
-				Size = UDim2.fromOffset(160, 95),
-				BackgroundTransparency = 0.1,
-				BackgroundColor3 = Color3.fromRGB(25, 25, 25),
+
+			local DropFrame = InsertTheme(Create("Frame", NoClickFrame, {
+				Size = UDim2.fromOffset(234, 0),
+				BackgroundTransparency = 0.05,
+				BackgroundColor3 = Theme["Color Hub 2"],
 				AnchorPoint = Vector2.new(0, 1),
+				ClipsDescendants = true,
+				Active = true,
 				Name = "ColorpickerFrame"
-			})Make("Corner", DropFrame)Make("Stroke", DropFrame)Make("Gradient", DropFrame, {Rotation = 60})
-			
+			}), "Frame")Make("Corner", DropFrame)Make("Stroke", DropFrame)
+
 			local SelectedColor = Default
-			
-			local function UpdateColor()
+			local Hue, Sat, Vib = Default:ToHSV()
+
+			local HueSequenceTable = {}
+			for h = 0, 1, 0.1 do
+				table.insert(HueSequenceTable, ColorSequenceKeypoint.new(h, Color3.fromHSV(h, 1, 1)))
+			end
+
+			local Padding = Create("UIPadding", DropFrame, {
+				PaddingBottom = UDim.new(0, 6),
+				PaddingLeft = UDim.new(0, 6),
+				PaddingRight = UDim.new(0, 6),
+				PaddingTop = UDim.new(0, 6)
+			})
+
+			local ContentHolder = Create("Frame", DropFrame, {
+				BackgroundTransparency = 1,
+				Position = UDim2.fromOffset(6, 6),
+				Size = UDim2.new(1, -12, 0, 200)
+			}, {
+				Create("UIListLayout", {
+					FillDirection = "Horizontal",
+					Padding = UDim.new(0, 6)
+				})
+			})
+
+			local SatVibMap = Create("TextButton", ContentHolder, {
+				BackgroundColor3 = Color3.fromHSV(Hue, 1, 1),
+				Size = UDim2.fromOffset(200, 200),
+				Text = "",
+				AutoButtonColor = false
+			})Make("Corner", SatVibMap, UDim.new(0, 4))
+
+			Create("UIGradient", SatVibMap, {
+				Color = ColorSequence.new({
+					ColorSequenceKeypoint.new(0, Color3.new(1,1,1)),
+					ColorSequenceKeypoint.new(1, Color3.new(1,1,1))
+				}),
+				Transparency = NumberSequence.new({
+					NumberSequenceKeypoint.new(0, 0),
+					NumberSequenceKeypoint.new(1, 1)
+				})
+			})
+
+			local BlackGradient = Create("Frame", SatVibMap, {
+				Size = UDim2.fromScale(1, 1),
+				BackgroundTransparency = 1
+			})Make("Corner", BlackGradient, UDim.new(0, 4))
+			Create("UIGradient", BlackGradient, {
+				Color = ColorSequence.new({
+					ColorSequenceKeypoint.new(0, Color3.new(0,0,0)),
+					ColorSequenceKeypoint.new(1, Color3.new(0,0,0))
+				}),
+				Transparency = NumberSequence.new({
+					NumberSequenceKeypoint.new(0, 1),
+					NumberSequenceKeypoint.new(1, 0)
+				}),
+				Rotation = 90
+			})
+
+			local SatVibCursor = Create("Frame", SatVibMap, {
+				Size = UDim2.fromOffset(8, 8),
+				AnchorPoint = Vector2.new(0.5, 0.5),
+				Position = UDim2.fromScale(Sat, 1 - Vib),
+				BackgroundColor3 = Color3.new(1, 1, 1),
+				ZIndex = 2
+			})Make("Corner", SatVibCursor, UDim.new(0.5, 0))
+			Make("Stroke", SatVibCursor, {}, Color3.new(0,0,0))
+
+			local HueSelector = Create("TextButton", ContentHolder, {
+				Size = UDim2.fromOffset(16, 200),
+				Text = "",
+				AutoButtonColor = false
+			})Make("Corner", HueSelector, UDim.new(0, 4))
+			Create("UIGradient", HueSelector, {
+				Color = ColorSequence.new(HueSequenceTable),
+				Rotation = 90
+			})
+
+			local HueCursor = Create("Frame", HueSelector, {
+				AnchorPoint = Vector2.new(0.5, 0.5),
+				BackgroundColor3 = Color3.new(1,1,1),
+				BorderColor3 = Color3.new(0,0,0),
+				BorderSizePixel = 1,
+				Position = UDim2.fromScale(0.5, Hue),
+				Size = UDim2.new(1, 2, 0, 2)
+			})
+
+			local InfoHolder = Create("Frame", DropFrame, {
+				BackgroundTransparency = 1,
+				Position = UDim2.fromOffset(6, 212),
+				Size = UDim2.new(1, -12, 0, 20)
+			}, {
+				Create("UIListLayout", {
+					FillDirection = "Horizontal",
+					Padding = UDim.new(0, 6)
+				})
+			})
+
+			local HexBox = InsertTheme(Create("TextBox", InfoHolder, {
+				BackgroundColor3 = Theme["Color Stroke"],
+				Size = UDim2.fromScale(0.5, 1),
+				Font = Enum.Font.GothamBold,
+				TextSize = 10,
+				TextColor3 = Theme["Color Text"],
+				ClearTextOnFocus = false,
+				Text = "#" .. Default:ToHex()
+			}), "Stroke")Make("Corner", HexBox, UDim.new(0, 4))
+
+			local RgbBox = InsertTheme(Create("TextBox", InfoHolder, {
+				BackgroundColor3 = Theme["Color Stroke"],
+				Size = UDim2.fromScale(0.5, 1),
+				Font = Enum.Font.GothamBold,
+				TextSize = 10,
+				TextColor3 = Theme["Color Text"],
+				ClearTextOnFocus = false,
+				Text = math.floor(Default.R*255)..","..math.floor(Default.G*255)..","..math.floor(Default.B*255)
+			}), "Stroke")Make("Corner", RgbBox, UDim.new(0, 4))
+
+			local function UpdateDisplay()
+				SelectedColor = Color3.fromHSV(Hue, Sat, Vib)
+
 				ColorIndicator.BackgroundColor3 = SelectedColor
+				SatVibMap.BackgroundColor3 = Color3.fromHSV(Hue, 1, 1)
+				SatVibCursor.Position = UDim2.fromScale(Sat, 1 - Vib)
+				HueCursor.Position = UDim2.fromScale(0.5, Hue)
+
+				HexBox.Text = "#" .. SelectedColor:ToHex()
+				RgbBox.Text = math.floor(SelectedColor.R*255)..","..math.floor(SelectedColor.G*255)..","..math.floor(SelectedColor.B*255)
+
 				local saveTable = {R = SelectedColor.R, G = SelectedColor.G, B = SelectedColor.B}
 				SetFlag(Flag, saveTable)
 				Funcs:FireCallback(Callback, SelectedColor)
 			end
-			
-			local function AddSliderRGB(name, yPos, colorTheme, defaultVal, callbackVal)
-				local SliderHolder = Create("Frame", DropFrame, {
-					Size = UDim2.new(1, -20, 0, 20),
-					Position = UDim2.new(0, 10, 0, yPos),
-					BackgroundTransparency = 1
-				})
-				
-				local Label = Create("TextLabel", SliderHolder, {
-					Size = UDim2.new(0, 15, 1, 0),
-					BackgroundTransparency = 1,
-					Font = Enum.Font.GothamBold,
-					Text = name,
-					TextColor3 = colorTheme,
-					TextSize = 10,
-					TextXAlignment = "Left"
-				})
-				
-				local SliderBar = Create("Frame", SliderHolder, {
-					Size = UDim2.new(1, -25, 0, 4),
-					Position = UDim2.new(0, 20, 0.5, 0),
-					AnchorPoint = Vector2.new(0, 0.5),
-					BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-				})Make("Corner", SliderBar)
-				
-				local SliderIcon = Create("Frame", SliderBar, {
-					Size = UDim2.new(0, 6, 0, 10),
-					Position = UDim2.fromScale(defaultVal, 0.5),
-					AnchorPoint = Vector2.new(0.5, 0.5),
-					BackgroundColor3 = Color3.fromRGB(220, 220, 220)
-				})Make("Corner", SliderIcon)
-				
-				local function ControlPos()
-					local MousePos = Player:GetMouse()
-					local APos = MousePos.X - SliderBar.AbsolutePosition.X
-					local ConfigureDpiPos = APos / SliderBar.AbsoluteSize.X
-					SliderIcon.Position = UDim2.new(math.clamp(ConfigureDpiPos, 0, 1), 0, 0.5, 0)
-				end
-				
-				SliderHolder.InputBegan:Connect(function(Input)
-					if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
-						while UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) do task.wait()
-							ControlPos()
-						end
-					end
-				end)
-				
-				SliderIcon:GetPropertyChangedSignal("Position"):Connect(function()
-					local val = SliderIcon.Position.X.Scale
-					callbackVal(val)
-				end)
-				
-				return {
-					Set = function(val)
-						SliderIcon.Position = UDim2.fromScale(math.clamp(val, 0, 1), 0.5)
-					end
-				}
-			end
-			
-			local rSlider, gSlider, bSlider
-			
-			rSlider = AddSliderRGB("R", 10, Color3.fromRGB(255, 50, 50), Default.R, function(v)
-				SelectedColor = Color3.new(v, SelectedColor.G, SelectedColor.B)
-				UpdateColor()
-			end)
-			gSlider = AddSliderRGB("G", 35, Color3.fromRGB(50, 255, 50), Default.G, function(v)
-				SelectedColor = Color3.new(SelectedColor.R, v, SelectedColor.B)
-				UpdateColor()
-			end)
-			bSlider = AddSliderRGB("B", 60, Color3.fromRGB(50, 50, 255), Default.B, function(v)
-				SelectedColor = Color3.new(SelectedColor.R, SelectedColor.G, v)
-				UpdateColor()
-			end)
-			
+
+			local WaitClick = false
 			local function CalculatePos()
 				local FramePos = ColorIndicator.AbsolutePosition
 				local ScreenSize = ScreenGui.AbsoluteSize
-				local ClampX = math.clamp((FramePos.X / UIScale), 0, ScreenSize.X / UIScale - DropFrame.Size.X.Offset)
-				local ClampY = math.clamp((FramePos.Y / UIScale) , 0, ScreenSize.Y / UIScale)
-				
-				local NewPos = UDim2.fromOffset(ClampX, ClampY)
+				local ClampX = math.clamp(FramePos.X / UIScale, 0, ScreenSize.X / UIScale - DropFrame.Size.X.Offset)
+				local ClampY = math.clamp(FramePos.Y / UIScale, 0, ScreenSize.Y / UIScale)
 				DropFrame.AnchorPoint = Vector2.new(0, FramePos.Y > ScreenSize.Y / 1.4 and 1 or 0)
-				CreateTween({DropFrame, "Position", NewPos, 0.1})
+				CreateTween({DropFrame, "Position", UDim2.fromOffset(ClampX, ClampY), 0.1})
 			end
-			
+
 			local function Minimize()
 				if WaitClick then return end
 				WaitClick = true
 				if NoClickFrame.Visible then
-					CreateTween({DropFrame, "Size", UDim2.new(0, 160, 0, 0), 0.2, true})
+					CreateTween({DropFrame, "Size", UDim2.fromOffset(234, 0), 0.2, true})
 					NoClickFrame.Visible = false
 				else
 					NoClickFrame.Visible = true
-					CreateTween({DropFrame, "Size", UDim2.fromOffset(160, 95), 0.2, true})
+					CalculatePos()
+					CreateTween({DropFrame, "Size", UDim2.fromOffset(234, 240), 0.2, true})
 				end
 				WaitClick = false
 			end
-			
+
+			SatVibMap.InputBegan:Connect(function(Input)
+				if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
+					while UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) do
+						task.wait()
+						local MinX = SatVibMap.AbsolutePosition.X
+						local MaxX = MinX + SatVibMap.AbsoluteSize.X
+						local MinY = SatVibMap.AbsolutePosition.Y
+						local MaxY = MinY + SatVibMap.AbsoluteSize.Y
+						Sat = math.clamp((PlayerMouse.X - MinX) / (MaxX - MinX), 0, 1)
+						Vib = 1 - math.clamp((PlayerMouse.Y - MinY) / (MaxY - MinY), 0, 1)
+						UpdateDisplay()
+					end
+				end
+			end)
+
+			HueSelector.InputBegan:Connect(function(Input)
+				if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
+					while UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) do
+						task.wait()
+						local Min = HueSelector.AbsolutePosition.Y
+						local Max = Min + HueSelector.AbsoluteSize.Y
+						Hue = math.clamp((PlayerMouse.Y - Min) / (Max - Min), 0, 1)
+						UpdateDisplay()
+					end
+				end
+			end)
+
+			HexBox.FocusLost:Connect(function(Enter)
+				if not Enter then return end
+				local s, color = pcall(Color3.fromHex, HexBox.Text)
+				if s then
+					Hue, Sat, Vib = color:ToHSV()
+					UpdateDisplay()
+				end
+			end)
+
+			RgbBox.FocusLost:Connect(function(Enter)
+				if not Enter then return end
+				local r, g, b = RgbBox.Text:match("(%d+),(%d+),(%d+)")
+				if r and g and b then
+					Hue, Sat, Vib = Color3.fromRGB(tonumber(r), tonumber(g), tonumber(b)):ToHSV()
+					UpdateDisplay()
+				end
+			end)
+
 			Button.Activated:Connect(Minimize)
 			NoClickFrame.MouseButton1Down:Connect(Minimize)
 			NoClickFrame.MouseButton1Click:Connect(Minimize)
-			MainFrame:GetPropertyChangedSignal("Visible"):Connect(Minimize)
+			MainFrame:GetPropertyChangedSignal("Visible"):Connect(function()
+				if NoClickFrame.Visible then Minimize() end
+			end)
 			ColorIndicator:GetPropertyChangedSignal("AbsolutePosition"):Connect(CalculatePos)
 			CalculatePos()
-			
+
 			local Colorpicker = {}
 			function Colorpicker:Visible(...) Funcs:ToggleVisible(Button, ...) end
 			function Colorpicker:Destroy() Button:Destroy() end
 			function Colorpicker:Callback(...) Funcs:InsertCallback(Callback, ...)(SelectedColor) end
 			function Colorpicker:Set(NewColor)
 				if typeof(NewColor) == "Color3" then
-					SelectedColor = NewColor
-					rSlider.Set(NewColor.R)
-					gSlider.Set(NewColor.G)
-					bSlider.Set(NewColor.B)
-					UpdateColor()
+					Hue, Sat, Vib = NewColor:ToHSV()
+					UpdateDisplay()
 				end
 			end
 			return Colorpicker
 		end
-		
+
 		return Tab
 	end
 	
