@@ -1687,9 +1687,9 @@ function redzlib:MakeWindow(Configs)
 			end
 			
 			Button.Activated:Connect(Minimize)
-			NoClickFrame.MouseButton1Down:Connect(Minimize)
-			NoClickFrame.MouseButton1Click:Connect(Minimize)
-			MainFrame:GetPropertyChangedSignal("Visible"):Connect(Minimize)
+			NoClickFrame.MouseButton1Down:Connect(Disable)
+			NoClickFrame.MouseButton1Click:Connect(Disable)
+			MainFrame:GetPropertyChangedSignal("Visible"):Connect(Disable)
 			SelectedFrame:GetPropertyChangedSignal("AbsolutePosition"):Connect(CalculatePos)
 			
 			Button.Activated:Connect(CalculateSize)
@@ -1799,7 +1799,10 @@ function redzlib:MakeWindow(Configs)
 				TextSize = 12
 			}), "Text")
 			
-			local UIScale = Create("UIScale", LabelVal)
+			local UIScale = Create("UIScale", {
+				Scale = 1,
+				Parent = LabelVal
+			})
 			
 			local BaseMousePos = Create("Frame", SliderBar, {
 				Position = UDim2.new(0, 0, 0.5, 0),
@@ -2041,6 +2044,94 @@ function redzlib:MakeWindow(Configs)
 			return DiscordInvite
 		end
 		
+		-- ELEMENTO DE KEYBIND (RESTAURADO E ATUALIZADO)
+		function Tab:AddKeybind(Configs)
+			local KName = Configs[1] or Configs.Name or Configs.Title or "Keybind"
+			local KDesc = Configs.Desc or Configs.Description or ""
+			local Default = Configs[2] or Configs.Default or Enum.KeyCode.E
+			local Callback = Funcs:GetCallback(Configs, 3)
+			local Flag = Configs[4] or Configs.Flag or false
+			
+			if CheckFlag(Flag) then
+				local saved = GetFlag(Flag)
+				if saved then
+					local s, keyCode = pcall(function() return Enum.KeyCode[saved] end)
+					if s then Default = keyCode end
+				end
+			end
+			
+			local Button, LabelFunc = ButtonFrame(Container, KName, KDesc, UDim2.new(1, -120))
+			
+			local BindFrame = InsertTheme(Create("Frame", Button, {
+				Size = UDim2.new(0, 80, 0, 18),
+				Position = UDim2.new(1, -10, 0.5),
+				AnchorPoint = Vector2.new(1, 0.5),
+				BackgroundColor3 = Theme["Color Hub 2"]
+			}), "Frame")Make("Corner", BindFrame, UDim.new(0, 4))Make("Stroke", BindFrame)
+			
+			local BindLabel = InsertTheme(Create("TextLabel", BindFrame, {
+				Size = UDim2.new(1, 0, 1, 0),
+				BackgroundTransparency = 1,
+				Font = Enum.Font.GothamBold,
+				TextSize = 9,
+				TextColor3 = Theme["Color Text"],
+				Text = Default.Name
+			}), "Text")
+			
+			local CurrentKey = Default
+			local Binding = false
+			local GlobalConnection
+			
+			local function SetupGlobalListener()
+				if GlobalConnection then GlobalConnection:Disconnect() end
+				GlobalConnection = UserInputService.InputBegan:Connect(function(Input, Processed)
+					if not Processed and Input.KeyCode == CurrentKey then
+						Funcs:FireCallback(Callback, CurrentKey)
+					end
+				end)
+			end
+			SetupGlobalListener()
+			
+			Button.Activated:Connect(function()
+				if Binding then return end
+				Binding = true
+				BindLabel.Text = "..."
+				
+				local Connection
+				Connection = UserInputService.InputBegan:Connect(function(Input)
+					if Input.UserInputType == Enum.UserInputType.Keyboard then
+						local Key = Input.KeyCode
+						if Key ~= Enum.KeyCode.Escape then
+							CurrentKey = Key
+							BindLabel.Text = Key.Name
+							SetFlag(Flag, Key.Name)
+							SetupGlobalListener()
+						else
+							BindLabel.Text = CurrentKey.Name
+						end
+						Connection:Disconnect()
+						Binding = false
+					end
+				end)
+			end)
+			
+			local Keybind = {}
+			function Keybind:Visible(...) Funcs:ToggleVisible(Button, ...) end
+			function Keybind:Destroy() 
+				if GlobalConnection then GlobalConnection:Disconnect() end
+				Button:Destroy() 
+			end
+			function Keybind:Set(NewKey)
+				if typeof(NewKey) == "EnumItem" then
+					CurrentKey = NewKey
+					BindLabel.Text = NewKey.Name
+					SetFlag(Flag, NewKey.Name)
+					SetupGlobalListener()
+				end
+			end
+			return Keybind
+		end
+
 		-- ELEMENTO DE COLOR PICKER AVANCADO (CONFORME SOLICITADO)
 		function Tab:AddColorpicker(Configs)
 			local CName = Configs[1] or Configs.Name or Configs.Title or "Colorpicker"
