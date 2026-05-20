@@ -1687,9 +1687,9 @@ function redzlib:MakeWindow(Configs)
 			end
 			
 			Button.Activated:Connect(Minimize)
-			NoClickFrame.MouseButton1Down:Connect(Minimize)
-			NoClickFrame.MouseButton1Click:Connect(Minimize)
-			MainFrame:GetPropertyChangedSignal("Visible"):Connect(Minimize)
+			NoClickFrame.MouseButton1Down:Connect(Disable)
+			NoClickFrame.MouseButton1Click:Connect(Disable)
+			MainFrame:GetPropertyChangedSignal("Visible"):Connect(Disable)
 			SelectedFrame:GetPropertyChangedSignal("AbsolutePosition"):Connect(CalculatePos)
 			
 			Button.Activated:Connect(CalculateSize)
@@ -2241,7 +2241,7 @@ function redzlib:MakeWindow(Configs)
 				Position = UDim2.fromScale(Sat, 1 - Vib),
 				BackgroundColor3 = Color3.new(1, 1, 1),
 				ZIndex = 2
-			})Make("Corner", SatVibCursor, UDim.new(0, 4))
+			})Make("Corner", SatVibCursor, UDim.new(0.5, 0))
 			Make("Stroke", SatVibCursor, {}, Color3.new(0,0,0))
 
 			local HueSelector = Create("TextButton", ContentHolder, {
