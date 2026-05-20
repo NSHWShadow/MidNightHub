@@ -570,7 +570,7 @@ function redzlib:SetScale(NewScale)
 	UIScale, ScreenGui.Scale.Scale = NewScale, NewScale
 end
 
--- NOVO SISTEMA DE NOTIFICACOES CONVERTIDO E INTEGRADO REMOTAMENTE/LOCALMENTE
+-- NOVO SISTEMA DE NOTIFICACOES CONVERTIDO (CORRIGIDO)
 local NotificationHolder = nil
 
 local function CreateNotificationHolder()
@@ -584,7 +584,7 @@ local function CreateNotificationHolder()
     
     local listLayout = Create("UIListLayout", holder, {
         HorizontalAlignment = Enum.HorizontalAlignment.Center,
-        SortOrder = Enum.SortOrder.SortOrder or Enum.SortOrder.LayoutOrder,
+        SortOrder = Enum.SortOrder.LayoutOrder, -- Corrigido para evitar erro de sintaxe
         VerticalAlignment = Enum.VerticalAlignment.Bottom,
         Padding = UDim.new(0, 5)
     })
@@ -605,7 +605,7 @@ function redzlib:Notify(Configs)
             if gethui then
                 NotificationHolder.Parent = gethui()
             else
-                NotificationHolder.Parent = ParentGui -- Fallback de segurança para PlayerGui ou CoreGui da redzlib
+                NotificationHolder.Parent = ParentGui
             end
         end
 
