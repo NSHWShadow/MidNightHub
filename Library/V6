@@ -969,6 +969,7 @@ function redzlib:MakeWindow(Configs)
 			Size = UDim2.new(0, 13, 0, 13),
 			AnchorPoint = Vector2.new(0, 0.5),
 			Image = TIcon or "",
+			ImageColor3 = Theme["Color Theme"], -- Explicitamente define como vermelho na criacao
 			BackgroundTransparency = 1,
 			ImageTransparency = (FirstTab and 0.3) or 0
 		}), "Theme")
@@ -1162,12 +1163,13 @@ function redzlib:MakeWindow(Configs)
 			
 			local Button, LabelFunc = ButtonFrame(Container, TName, TDesc, UDim2.new(1, -38))
 			
-			local ToggleHolder = InsertTheme(Create("Frame", Button, {
+			local ToggleHolder = Create("Frame", Button, {
 				Size = UDim2.new(0, 35, 0, 18),
 				Position = UDim2.new(1, -10, 0.5),
 				AnchorPoint = Vector2.new(1, 0.5),
-				BackgroundColor3 = Theme["Color Stroke"]
-			}), "Stroke")Make("Corner", ToggleHolder, UDim.new(0.5, 0))
+				BackgroundColor3 = Color3.fromRGB(100, 100, 100) -- Cor OFF
+			})Make("Corner", ToggleHolder, UDim.new(0.5, 0))
+			Make("Stroke", ToggleHolder, {}, Color3.fromRGB(40, 40, 40))
 			
 			local Slider = Create("Frame", ToggleHolder, {
 				BackgroundTransparency = 1,
@@ -1176,12 +1178,12 @@ function redzlib:MakeWindow(Configs)
 				AnchorPoint = Vector2.new(0.5, 0.5)
 			})
 			
-			local Toggle = InsertTheme(Create("Frame", Slider, {
+			local Toggle = Create("Frame", Slider, {
 				Size = UDim2.new(0, 12, 0, 12),
 				Position = UDim2.new(0, 0, 0.5),
 				AnchorPoint = Vector2.new(0, 0.5),
-				BackgroundColor3 = Theme["Color Theme"]
-			}), "Theme")Make("Corner", Toggle, UDim.new(0.5, 0))
+				BackgroundColor3 = Color3.fromRGB(230, 230, 230) -- Cor OFF
+			})Make("Corner", Toggle, UDim.new(0.5, 0))
 			
 			local WaitClick
 			local function SetToggle(Val)
@@ -1191,13 +1193,15 @@ function redzlib:MakeWindow(Configs)
 				SetFlag(Flag, Default)
 				Funcs:FireCallback(Callback, Default)
 				if Default then
-					CreateTween({Toggle, "Position", UDim2.new(1, 0, 0.5), 0.25})
-					CreateTween({Toggle, "BackgroundTransparency", 0, 0.25})
-					CreateTween({Toggle, "AnchorPoint", Vector2.new(1, 0.5), 0.25, Wait or false})
+					CreateTween({Toggle, "Position", UDim2.new(1, 0, 0.5), 0.2})
+					CreateTween({Toggle, "AnchorPoint", Vector2.new(1, 0.5), 0.2})
+					CreateTween({Toggle, "BackgroundColor3", Color3.fromRGB(15, 15, 15), 0.2}) -- Bolinha preta ao ligar
+					CreateTween({ToggleHolder, "BackgroundColor3", Color3.fromRGB(255, 40, 40), 0.2}) -- Fundo vermelho ao ligar
 				else
-					CreateTween({Toggle, "Position", UDim2.new(0, 0, 0.5), 0.25})
-					CreateTween({Toggle, "BackgroundTransparency", 0.8, 0.25})
-					CreateTween({Toggle, "AnchorPoint", Vector2.new(0, 0.5), 0.25, Wait or false})
+					CreateTween({Toggle, "Position", UDim2.new(0, 0, 0.5), 0.2})
+					CreateTween({Toggle, "AnchorPoint", Vector2.new(0, 0.5), 0.2})
+					CreateTween({Toggle, "BackgroundColor3", Color3.fromRGB(230, 230, 230), 0.2}) -- Bolinha clara ao desligar
+					CreateTween({ToggleHolder, "BackgroundColor3", Color3.fromRGB(100, 100, 100), 0.2}) -- Fundo escuro ao desligar
 				end
 				WaitClick = false
 			end;task.spawn(SetToggle, Default)
@@ -1605,7 +1609,7 @@ function redzlib:MakeWindow(Configs)
 		end
 		function Tab:AddSlider(Configs)
 			local SName = Configs[1] or Configs.Name or Configs.Title or "Slider!"
-			local SDesc = Configs[2] or Configs.Desc or Configs.Description or ""
+			local SDesc = Configs.Desc or Configs.Description or ""
 			local Min = Configs[2] or Configs.MinValue or Configs.Min or 10
 			local Max = Configs[3] or Configs.MaxValue or Configs.Max or 100
 			local Increase = Configs[4] or Configs.Increase or 1
@@ -1907,5 +1911,3 @@ function redzlib:MakeWindow(Configs)
 end
 
 return redzlib
-
---- END OF FILE Paste May 20, 2026 - 4:02AM ---
