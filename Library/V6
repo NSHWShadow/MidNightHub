@@ -971,7 +971,7 @@ function redzlib:MakeWindow(Configs)
 			Image = TIcon or "",
 			BackgroundTransparency = 1,
 			ImageTransparency = (FirstTab and 0.3) or 0
-		}), "Text")
+		}), "Theme")
 		
 		local Selected = InsertTheme(Create("Frame", TabSelect, {
 			Size = FirstTab and UDim2.new(0, 4, 0, 4) or UDim2.new(0, 4, 0, 13),
@@ -1605,7 +1605,7 @@ function redzlib:MakeWindow(Configs)
 		end
 		function Tab:AddSlider(Configs)
 			local SName = Configs[1] or Configs.Name or Configs.Title or "Slider!"
-			local SDesc = Configs.Desc or Configs.Description or ""
+			local SDesc = Configs[2] or Configs.Desc or Configs.Description or ""
 			local Min = Configs[2] or Configs.MinValue or Configs.Min or 10
 			local Max = Configs[3] or Configs.MaxValue or Configs.Max or 100
 			local Increase = Configs[4] or Configs.Increase or 1
@@ -1907,3 +1907,5 @@ function redzlib:MakeWindow(Configs)
 end
 
 return redzlib
+
+--- END OF FILE Paste May 20, 2026 - 4:02AM ---
