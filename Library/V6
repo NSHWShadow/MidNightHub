@@ -39,7 +39,7 @@ local redzlib = {
 	Tabs = {},
 	Icons = (function()
 		local success, result = pcall(function()
-			return loadstring(game:HttpGet("https://raw.githubusercontent.com/NSHWShadow/MidNightHub/refs/heads/main/Library/V6"))()
+			return loadstring(game:HttpGet("https://raw.githubusercontent.com/NSHWShadow/MidNightHub/refs/heads/main/Library/icons.lua"))()
 		end)
 		if success and type(result) == "table" then
 			return result
