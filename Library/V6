@@ -570,123 +570,147 @@ function redzlib:SetScale(NewScale)
 	UIScale, ScreenGui.Scale.Scale = NewScale, NewScale
 end
 
--- SISTEMA DE NOTIFICACOES INTEGRADO (POLIDO COM CANVASGROUP)
-local NotificationHolder
-local function GetNotificationHolder()
-	if not NotificationHolder then
-		NotificationHolder = Create("Frame", ScreenGui, {
-			Size = UDim2.new(0, 240, 1, -40),
-			Position = UDim2.new(1, -20, 1, -20),
-			AnchorPoint = Vector2.new(1, 1),
-			BackgroundTransparency = 1,
-			Name = "Notifications"
-		}, {
-			Create("UIListLayout", {
-				Padding = UDim.new(0, 8),
-				VerticalAlignment = "Bottom",
-				HorizontalAlignment = "Right",
-				SortOrder = "LayoutOrder"
-			})
-		})
-	end
-	return NotificationHolder
+-- NOVO SISTEMA DE NOTIFICACOES CONVERTIDO E INTEGRADO REMOTAMENTE/LOCALMENTE
+local NotificationHolder = nil
+
+local function CreateNotificationHolder()
+    local holder = Create("Frame", {
+        Name = "NotificationHolder",
+        BackgroundTransparency = 1,
+        Position = UDim2.new(1, -25, 1, -25),
+        Size = UDim2.new(0, 300, 1, -25),
+        AnchorPoint = Vector2.new(1, 1)
+    })
+    
+    local listLayout = Create("UIListLayout", holder, {
+        HorizontalAlignment = Enum.HorizontalAlignment.Center,
+        SortOrder = Enum.SortOrder.SortOrder or Enum.SortOrder.LayoutOrder,
+        VerticalAlignment = Enum.VerticalAlignment.Bottom,
+        Padding = UDim.new(0, 5)
+    })
+    
+    return holder
 end
 
 function redzlib:Notify(Configs)
-	local NTitle = Configs.Title or "Notification"
-	local NText = Configs.Content or Configs.Text or ""
-	local NDuration = Configs.Duration or 5
-	local NIcon = Configs.Icon or "alertcircle"
-	
-	local Holder = GetNotificationHolder()
-	
-	local Frame = Create("CanvasGroup", Holder, {
-		Size = UDim2.new(1, 0, 0, 0),
-		AutomaticSize = "Y",
-		GroupTransparency = 1, -- Inicia invisível
-		BackgroundColor3 = Theme["Color Hub 2"],
-		Name = "Notification"
-	})Make("Corner", Frame)Make("Stroke", Frame)Make("Gradient", Frame, {Rotation = 45})
-	
-	local IconImg = redzlib:GetIcon(NIcon)
-	local IconLabel = Create("ImageLabel", Frame, {
-		Size = UDim2.fromOffset(16, 16),
-		Position = UDim2.new(0, 10, 0.5),
-		AnchorPoint = Vector2.new(0, 0.5),
-		BackgroundTransparency = 1,
-		Image = IconImg or "",
-		ImageColor3 = Theme["Color Theme"]
-	})
-	
-	local TextHolder = Create("Frame", Frame, {
-		Size = UDim2.new(1, -45, 1, 0),
-		Position = UDim2.new(0, 32, 0, 0),
-		BackgroundTransparency = 1
-	}, {
-		Create("UIListLayout", {
-			Padding = UDim.new(0, 2),
-			VerticalAlignment = "Center"
-		}),
-		Create("UIPadding", {
-			PaddingTop = UDim.new(0, 6),
-			PaddingBottom = UDim.new(0, 6)
-		}),
-		Create("TextLabel", {
-			Font = Enum.Font.GothamBold,
-			Text = NTitle,
-			TextColor3 = Theme["Color Text"],
-			TextSize = 11,
-			Size = UDim2.new(1, 0, 0, 14),
-			BackgroundTransparency = 1,
-			TextXAlignment = "Left"
-		}),
-		Create("TextLabel", {
-			Font = Enum.Font.Gotham,
-			Text = NText,
-			TextColor3 = Theme["Color Dark Text"],
-			TextSize = 9,
-			Size = UDim2.new(1, 0, 0, 0),
-			AutomaticSize = "Y",
-			TextWrapped = true,
-			BackgroundTransparency = 1,
-			TextXAlignment = "Left"
-		})
-	})
-	
-	local Close = Create("ImageButton", Frame, {
-		Size = UDim2.fromOffset(10, 10),
-		Position = UDim2.new(1, -8, 0, 8),
-		AnchorPoint = Vector2.new(1, 0),
-		Image = "rbxassetid://10747384394",
-		BackgroundTransparency = 1,
-		ImageColor3 = Theme["Color Dark Text"]
-	})
-	
-	local BarBG = Create("Frame", Frame, {
-		Size = UDim2.new(1, 0, 0, 2),
-		Position = UDim2.new(0, 0, 1, -2),
-		BackgroundColor3 = Color3.fromRGB(40, 40, 40),
-		BorderSizePixel = 0
-	})
-	local Bar = Create("Frame", BarBG, {
-		Size = UDim2.new(1, 0, 1, 0),
-		BackgroundColor3 = Theme["Color Theme"],
-		BorderSizePixel = 0
-	})
-	
-	CreateTween({Frame, "GroupTransparency", 0, 0.3})
-	CreateTween({Bar, "Size", UDim2.new(0, 0, 1, 0), NDuration})
-	
-	local closed = false
-	local function dismiss()
-		if closed then return end
-		closed = true
-		CreateTween({Frame, "GroupTransparency", 1, 0.3, true})
-		Frame:Destroy()
-	end
-	
-	Close.Activated:Connect(dismiss)
-	task.delay(NDuration, dismiss)
+    task.spawn(function()
+        local NTitle = Configs.Name or Configs.Title or "Notification"
+        local NText = Configs.Content or Configs.Text or "Test"
+        local NIcon = Configs.Image or Configs.Icon or "rbxassetid://4384403532"
+        local NTime = Configs.Time or Configs.Duration or 15
+
+        -- Cria o holder de notificações se ele não existir
+        if not NotificationHolder or not NotificationHolder.Parent then
+            NotificationHolder = CreateNotificationHolder()
+            if gethui then
+                NotificationHolder.Parent = gethui()
+            else
+                NotificationHolder.Parent = ParentGui -- Fallback de segurança para PlayerGui ou CoreGui da redzlib
+            end
+        end
+
+        -- Criar o frame da notificação
+        local NotificationParent = Create("Frame", NotificationHolder, {
+            BackgroundTransparency = 1,
+            Size = UDim2.new(1, 0, 0, 0),
+            AutomaticSize = Enum.AutomaticSize.Y
+        })
+
+        -- Frame principal da notificação sincronizado com os temas da Hub
+        local NotificationFrame = InsertTheme(Create("Frame", NotificationParent, {
+            BackgroundColor3 = Theme["Color Hub 2"],
+            BackgroundTransparency = 0,
+            Size = UDim2.new(1, 0, 0, 0),
+            Position = UDim2.new(1, -55, 0, 0),
+            AutomaticSize = Enum.AutomaticSize.Y,
+            Name = "NotificationFrame"
+        }), "Frame")
+        
+        local corner = Create("UICorner", NotificationFrame, {
+            CornerRadius = UDim.new(0, 10)
+        })
+        
+        -- UIStroke sincronizado esteticamente com a cor "Stroke" do tema RedDark
+        local stroke = InsertTheme(Create("UIStroke", NotificationFrame, {
+            Color = Theme["Color Stroke"],
+            Thickness = 1.2
+        }), "Stroke")
+        
+        local padding = Create("UIPadding", NotificationFrame, {
+            PaddingBottom = UDim.new(0, 12),
+            PaddingLeft = UDim.new(0, 12),
+            PaddingRight = UDim.new(0, 12),
+            PaddingTop = UDim.new(0, 12)
+        })
+        
+        -- Ícone dinâmico (permite passar nome de ícone Lucide ou Asset ID diretamente)
+        local icon = Create("ImageLabel", NotificationFrame, {
+            Image = redzlib:GetIcon(NIcon),
+            Size = UDim2.new(0, 20, 0, 20),
+            BackgroundTransparency = 1,
+            ImageColor3 = Color3.fromRGB(240, 240, 240),
+            Name = "Icon"
+        })
+        
+        local title = Create("TextLabel", NotificationFrame, {
+            Text = NTitle,
+            TextColor3 = Color3.fromRGB(240, 240, 240),
+            TextSize = 15,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(1, -30, 0, 20),
+            Position = UDim2.new(0, 30, 0, 0),
+            BackgroundTransparency = 1,
+            TextXAlignment = Enum.TextXAlignment.Left,
+            Name = "Title"
+        })
+        
+        local content = Create("TextLabel", NotificationFrame, {
+            Text = NText,
+            TextColor3 = Color3.fromRGB(200, 200, 200),
+            TextSize = 14,
+            Font = Enum.Font.GothamSemibold,
+            Size = UDim2.new(1, 0, 0, 0),
+            Position = UDim2.new(0, 0, 0, 25),
+            BackgroundTransparency = 1,
+            TextXAlignment = Enum.TextXAlignment.Left,
+            TextWrapped = true,
+            AutomaticSize = Enum.AutomaticSize.Y,
+            Name = "Content"
+        })
+
+        -- Animar entrada
+        local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quint)
+        local tween = TweenService:Create(NotificationFrame, tweenInfo, {Position = UDim2.new(0, 0, 0, 0)})
+        tween:Play()
+
+        -- Aguardar e animar saída
+        task.wait(NTime - 0.88)
+        
+        local iconTween = TweenService:Create(icon, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {ImageTransparency = 1})
+        iconTween:Play()
+        
+        local frameTween = TweenService:Create(NotificationFrame, TweenInfo.new(0.8, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.6})
+        frameTween:Play()
+        
+        task.wait(0.3)
+        
+        local strokeTween = TweenService:Create(stroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0.9})
+        strokeTween:Play()
+        
+        local titleTween = TweenService:Create(title, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 0.4})
+        titleTween:Play()
+        
+        local contentTween = TweenService:Create(content, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 0.5})
+        contentTween:Play()
+        
+        task.wait(0.05)
+        
+        local exitTween = TweenService:Create(NotificationFrame, TweenInfo.new(0.8, Enum.EasingStyle.Quint), {Position = UDim2.new(1, 20, 0, 0)})
+        exitTween:Play()
+        
+        task.wait(1.35)
+        NotificationParent:Destroy() -- Destrói a estrutura inteira de forma limpa para evitar acúmulo de memória
+    end)
 end
 
 function redzlib:MakeWindow(Configs)
@@ -2241,7 +2265,7 @@ function redzlib:MakeWindow(Configs)
 				Position = UDim2.fromScale(Sat, 1 - Vib),
 				BackgroundColor3 = Color3.new(1, 1, 1),
 				ZIndex = 2
-			})Make("Corner", SatVibCursor, UDim.new(0.5, 0))
+			})Make("Corner", SatVibCursor, UDim.new(0, 4))
 			Make("Stroke", SatVibCursor, {}, Color3.new(0,0,0))
 
 			local HueSelector = Create("TextButton", ContentHolder, {
