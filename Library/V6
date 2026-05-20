@@ -3,14 +3,12 @@ local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
-local CoreGui = game:GetService("CoreGui")
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
 local PlayerMouse = Player:GetMouse()
 
 local redzlib = {
 	Themes = {
-		-- TEMA REDDARK (Fundo escuro, texto branco, ícones/destaques vermelhos)
 		RedDark = {
 			["Color Hub 1"] = ColorSequence.new({
 				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(15, 15, 15)),
@@ -21,144 +19,6 @@ local redzlib = {
 			["Color Stroke"] = Color3.fromRGB(220, 30, 30),
 			["Color Theme"] = Color3.fromRGB(255, 40, 40),
 			["Color Text"] = Color3.fromRGB(255, 255, 255),
-			["Color Dark Text"] = Color3.fromRGB(180, 180, 180)
-		},
-
-		-- TEMA DARK RED (ESTILO PODEROSO HUB)
-		DarkRed = {
-			["Color Hub 1"] = ColorSequence.new({
-				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(45, 0, 0)),
-				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(70, 0, 0)),
-				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(45, 0, 0))
-			}),
-			["Color Hub 2"] = Color3.fromRGB(35, 0, 0),
-			["Color Stroke"] = Color3.fromRGB(180, 40, 40),
-			["Color Theme"] = Color3.fromRGB(210, 50, 50),
-			["Color Text"] = Color3.fromRGB(255, 255, 255),
-			["Color Dark Text"] = Color3.fromRGB(210, 210, 210)
-		},
-		
-		-- TEMA VOLCANO
-		Volcano = {
-			["Color Hub 1"] = ColorSequence.new({
-				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(80, 30, 0)),
-				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(120, 50, 0)),
-				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(80, 30, 0))
-			}),
-			["Color Hub 2"] = Color3.fromRGB(60, 25, 0),
-			["Color Stroke"] = Color3.fromRGB(200, 80, 0),
-			["Color Theme"] = Color3.fromRGB(220, 100, 0),
-			["Color Text"] = Color3.fromRGB(255, 255, 255),
-			["Color Dark Text"] = Color3.fromRGB(200, 200, 200)
-		},
-		
-		-- TEMA JJMODS
-		JJMods = {
-			["Color Hub 1"] = ColorSequence.new({
-				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(0, 40, 80)),
-				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 60, 120)),
-				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 40, 80))
-			}),
-			["Color Hub 2"] = Color3.fromRGB(0, 35, 70),
-			["Color Stroke"] = Color3.fromRGB(0, 100, 200),
-			["Color Theme"] = Color3.fromRGB(0, 120, 255),
-			["Color Text"] = Color3.fromRGB(255, 255, 255),
-			["Color Dark Text"] = Color3.fromRGB(200, 200, 200)
-		},
-		-- TEMA DELTA
-		Delta = {
-			["Color Hub 1"] = ColorSequence.new({
-				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(20, 20, 25)),
-				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(25, 25, 35)),
-				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(20, 20, 25))
-			}),
-			["Color Hub 2"] = Color3.fromRGB(18, 18, 22),
-			["Color Stroke"] = Color3.fromRGB(0, 100, 200),
-			["Color Theme"] = Color3.fromRGB(0, 120, 255),
-			["Color Text"] = Color3.fromRGB(255, 255, 255),
-			["Color Dark Text"] = Color3.fromRGB(180, 180, 200)
-		},
-		-- TEMA SKIBX
-		Skibx = {
-			["Color Hub 1"] = ColorSequence.new({
-				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(60, 0, 80)),
-				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(100, 0, 120)),
-				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(60, 0, 80))
-			}),
-			["Color Hub 2"] = Color3.fromRGB(45, 0, 60),
-			["Color Stroke"] = Color3.fromRGB(150, 0, 200),
-			["Color Theme"] = Color3.fromRGB(180, 0, 255),
-			["Color Text"] = Color3.fromRGB(255, 255, 255),
-			["Color Dark Text"] = Color3.fromRGB(200, 200, 200)
-		},
-		
-		-- TEMA ARCEUS X
-		Arceus = {
-			["Color Hub 1"] = ColorSequence.new({
-				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(80, 60, 0)),
-				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(120, 90, 0)),
-				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(80, 60, 0))
-			}),
-			["Color Hub 2"] = Color3.fromRGB(60, 45, 0),
-			["Color Stroke"] = Color3.fromRGB(200, 150, 0),
-			["Color Theme"] = Color3.fromRGB(255, 200, 0),
-			["Color Text"] = Color3.fromRGB(255, 255, 255),
-			["Color Dark Text"] = Color3.fromRGB(200, 200, 200)
-		},
-		
-		-- TEMA WAVE
-		Wave = {
-			["Color Hub 1"] = ColorSequence.new({
-				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(0, 60, 80)),
-				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 100, 120)),
-				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 60, 80))
-			}),
-			["Color Hub 2"] = Color3.fromRGB(0, 45, 60),
-			["Color Stroke"] = Color3.fromRGB(0, 150, 200),
-			["Color Theme"] = Color3.fromRGB(0, 180, 255),
-			["Color Text"] = Color3.fromRGB(255, 255, 255),
-			["Color Dark Text"] = Color3.fromRGB(200, 200, 200)
-		},
-		
-		-- TEMA SOLARA
-		Solara = {
-			["Color Hub 1"] = ColorSequence.new({
-				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(80, 0, 60)),
-				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(120, 0, 100)),
-				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(80, 0, 60))
-			}),
-			["Color Hub 2"] = Color3.fromRGB(60, 0, 45),
-			["Color Stroke"] = Color3.fromRGB(200, 0, 150),
-			["Color Theme"] = Color3.fromRGB(255, 0, 200),
-			["Color Text"] = Color3.fromRGB(255, 255, 255),
-			["Color Dark Text"] = Color3.fromRGB(200, 200, 200)
-		},
-		
-		-- TEMA DARK
-		Dark = {
-			["Color Hub 1"] = ColorSequence.new({
-				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(40, 40, 40)),
-				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(47.5, 47.5, 47.5)),
-				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(40, 40, 40))
-			}),
-			["Color Hub 2"] = Color3.fromRGB(45, 45, 45),
-			["Color Stroke"] = Color3.fromRGB(65, 65, 65),
-			["Color Theme"] = Color3.fromRGB(65, 150, 255),
-			["Color Text"] = Color3.fromRGB(245, 245, 245),
-			["Color Dark Text"] = Color3.fromRGB(190, 190, 190)
-		},
-		
-		-- TEMA PURPLE
-		Purple = {
-			["Color Hub 1"] = ColorSequence.new({
-				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(27.5, 25, 30)),
-				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(32.5, 32.5, 32.5)),
-				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(27.5, 25, 30))
-			}),
-			["Color Hub 2"] = Color3.fromRGB(30, 30, 30),
-			["Color Stroke"] = Color3.fromRGB(40, 40, 40),
-			["Color Theme"] = Color3.fromRGB(150, 0, 255),
-			["Color Text"] = Color3.fromRGB(240, 240, 240),
 			["Color Dark Text"] = Color3.fromRGB(180, 180, 180)
 		}
 	},
@@ -184,7 +44,7 @@ local redzlib = {
 		if success and type(result) == "table" then
 			return result
 		end
-		warn("Nao foi possivel carregar a biblioteca de icones de forma remota. Retornando tabela vazia.")
+		warn("Nao foi possivel carregar os icones remotamente. Retornando tabela vazia.")
 		return {}
 	end)()
 }
@@ -395,7 +255,21 @@ local GetFlag, SetFlag, CheckFlag do
 	end)
 end
 
-local ScreenGui = Create("ScreenGui", CoreGui, {
+local ParentGui
+pcall(function()
+	local test = game:GetService("CoreGui").Name
+	ParentGui = game:GetService("CoreGui")
+end)
+if not ParentGui then
+	ParentGui = Player:WaitForChild("PlayerGui")
+end
+
+local ScreenFind = ParentGui:FindFirstChild("redz Library V5")
+if ScreenFind then
+	ScreenFind:Destroy()
+end
+
+local ScreenGui = Create("ScreenGui", ParentGui, {
 	Name = "redz Library V5",
 }, {
 	Create("UIScale", {
@@ -403,11 +277,6 @@ local ScreenGui = Create("ScreenGui", CoreGui, {
 		Name = "Scale"
 	})
 })
-
-local ScreenFind = CoreGui:FindFirstChild(ScreenGui.Name)
-if ScreenFind and ScreenFind ~= ScreenGui then
-	ScreenFind:Destroy()
-end
 
 local function GetStr(val)
 	if type(val) == "function" then
@@ -586,7 +455,7 @@ local function ButtonFrame(Instance, Title, Description, HolderSize)
 		Name = "Option"
 	})Make("Corner", Frame, UDim.new(0, 6))
 	
-	LabelHolder = Create("Frame", Frame, {
+	local LabelHolder = Create("Frame", Frame, {
 		AutomaticSize = "Y",
 		BackgroundTransparency = 1,
 		Size = HolderSize,
