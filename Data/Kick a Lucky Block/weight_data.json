@@ -1,0 +1,15 @@
+[
+  { "name": "Wooden Stick",           "rarity": "Common",    "power": 2,      "price": 0 },
+  { "name": "Bone Barbell",           "rarity": "Rare",      "power": 5,      "price": 7500 },
+  { "name": "Stone Block",            "rarity": "Epic",      "power": 10,     "price": 75000 },
+  { "name": "Copper Plate",           "rarity": "Legendary", "power": 50,     "price": 500000 },
+  { "name": "Iron Plate",             "rarity": "Mythic",    "power": 150,    "price": 7200000 },
+  { "name": "Ice Barbell",            "rarity": "Godly",     "power": 400,    "price": 350000000 },
+  { "name": "Donut Barbell",          "rarity": "Secret",    "power": 1000,   "price": 6200000000 },
+  { "name": "Golden Barbell",         "rarity": "Divine",    "power": 2500,   "price": 85000000000 },
+  { "name": "Heaven Plate",           "rarity": "Rainbow",   "power": 6250,   "price": 1200000000000 },
+  { "name": "Mega Golden Barbell",    "rarity": "Hacked",    "power": 15000,  "price": 18000000000000 },
+  { "name": "Neon Pulse",             "rarity": "Demon",     "power": 40000,  "price": 500000000000000 },
+  { "name": "Giant Gold Star Barbell","rarity": "OG",        "power": 100000, "price": 20000000000000000 },
+  { "name": "Emerald Barbell",        "rarity": "Celestial", "power": 300000, "price": 5e+24 }
+]
