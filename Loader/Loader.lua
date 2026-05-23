@@ -589,4 +589,16 @@ Arqel.Callbacks.OnVerify = function(key)
     end
 end
 
-Arqel.Call
+Arqel.Callbacks.OnSuccess = function()
+    pcall(function() luarmor.load_script() end)
+end
+
+Arqel.Callbacks.OnFail = function(err)
+    warn("[MidNight Hub] Key failed: " .. tostring(err))
+end
+
+Arqel.Callbacks.OnClose = function()
+    getgenv().script_key = nil
+end
+
+Arqel:Launch()
