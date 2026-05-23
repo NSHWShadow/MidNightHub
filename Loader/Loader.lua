@@ -8,6 +8,15 @@
 --// Developer:          @draken13br      / Id → 1222501858120306718
 
 local placeScripts = {
+    
+    [2753915549]          = { script_id = "b56decd2d09874ff7c29ae078cbef218" },
+    [85211729168715]      = { script_id = "b56decd2d09874ff7c29ae078cbef218" },
+    [4442272183]          = { script_id = "b56decd2d09874ff7c29ae078cbef218" },
+    [79091703265657]      = { script_id = "b56decd2d09874ff7c29ae078cbef218" },
+    [7449423635]          = { script_id = "b56decd2d09874ff7c29ae078cbef218" },
+    [100117331123090000]  = { script_id = "b56decd2d09874ff7c29ae078cbef218" },
+
+    
     [131623223084840] = { script_id = "d50d096921fc3d6157990616b5c64e97" },
     [130167267952199] = { script_id = "edc1be702d0741c0d803d9cc44720fd7" },
     [77747658251236]  = { script_id = "edc1be702d0741c0d803d9cc44720fd7" },
@@ -580,16 +589,4 @@ Arqel.Callbacks.OnVerify = function(key)
     end
 end
 
-Arqel.Callbacks.OnSuccess = function()
-    pcall(function() luarmor.load_script() end)
-end
-
-Arqel.Callbacks.OnFail = function(err)
-    warn("[MidNight Hub] Key failed: " .. tostring(err))
-end
-
-Arqel.Callbacks.OnClose = function()
-    getgenv().script_key = nil
-end
-
-Arqel:Launch()
+Arqel.Call
