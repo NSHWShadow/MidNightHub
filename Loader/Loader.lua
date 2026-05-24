@@ -14,9 +14,8 @@ local placeScripts = {
     [4442272183]          = { script_id = "b56decd2d09874ff7c29ae078cbef218" },
     [79091703265657]      = { script_id = "b56decd2d09874ff7c29ae078cbef218" },
     [7449423635]          = { script_id = "b56decd2d09874ff7c29ae078cbef218" },
-    [100117331123089]  = { script_id = "b56decd2d09874ff7c29ae078cbef218" },
+    [100117331123089]     = { script_id = "b56decd2d09874ff7c29ae078cbef218" },
 
-    
     [131623223084840] = { script_id = "d50d096921fc3d6157990616b5c64e97" },
     [130167267952199] = { script_id = "edc1be702d0741c0d803d9cc44720fd7" },
     [77747658251236]  = { script_id = "edc1be702d0741c0d803d9cc44720fd7" },
@@ -30,7 +29,11 @@ local placeScripts = {
 }
 
 local placeEntry = placeScripts[game.PlaceId]
-if not placeEntry then return end
+if not placeEntry then
+    local Players = game:GetService("Players")
+    Players.LocalPlayer:Kick("\n❌  MidNight Hub\n\nEste jogo não é suportado.\nAcesse nosso Discord para ver os jogos compatíveis:\ndiscord.gg/Wkj77kdgHS")
+    return
+end
 
 local CONFIG = {
     DiscordInvite = "https://discord.gg/Wkj77kdgHS",
