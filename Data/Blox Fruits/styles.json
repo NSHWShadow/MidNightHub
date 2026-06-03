@@ -245,7 +245,7 @@
           "checkRemote": ["BuySanguineArt", true],
           "requiredMastery": 500,
           "requiredMaterials": [["Leviathan Heart", 1], ["Demonic Wisp", 20], ["Vampire Fang", 20]],
-          "pos": [-16353, 160, 99, 1, 0, 0, 0, 1, 0, 0, 0, 1]
+          "pos": [-16525.634766, 22.618439, -163.236877, 0.999392, 0, -0.034869, 0, 1, 0, -0.034869, 0, -0.999392]
         }
       }
     }
