@@ -46,8 +46,8 @@ MidNight: https://discord.gg/grhsdKj5Nx
 ## 📚 Libraries
 This project uses external libraries to improve the user interface and overall experience.
 
-> - **RedzLib** — UI library used in this project  
-> - Original library creator: **@tlredz**
+> - **MidNightLib** — UI library used in this project  
+> - Original library creator: **@MidNightTeam**
 
 ---
 
