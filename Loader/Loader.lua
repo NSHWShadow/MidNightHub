@@ -21,7 +21,7 @@ local placeScripts = {
     [130167267952199] = { script_id = "edc1be702d0741c0d803d9cc44720fd7" },
     [77747658251236]  = { script_id = "edc1be702d0741c0d803d9cc44720fd7" },
     [89469502395769]  = { script_id = "35aa8469a0f4dfc15c99ae8f5c85d862" },
-    [126509999114328] = {
+    [104067066727140] = {script_id = "7284aa6fec45ed2667e06b662eca3d74"},
         options = {
             { label = "Main Script",      script_id = "76bd9b0ebf88aa5dab8c5e7cc075afe1" },
             { label = "Kaitun 99 Noites", script_id = "3845b4aacb2fbf85bbdc40d5625a9a17" },
