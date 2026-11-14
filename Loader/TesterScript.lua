@@ -4,7 +4,8 @@ local placeScripts = {
     [4442272183]      = "f03cdfd981549bad3eacd0189801c6b9", 
     [79091703265657]  = "f03cdfd981549bad3eacd0189801c6b9", 
     [7449423635]      = "f03cdfd981549bad3eacd0189801c6b9",
-    [100117331123089] = "f03cdfd981549bad3eacd0189801c6b9", 
+    [100117331123089] = "f03cdfd981549bad3eacd0189801c6b9",
+    [104067066727140] = "7284aa6fec45ed2667e06b662eca3d74",
 }
 
 local scriptId = placeScripts[game.PlaceId]
